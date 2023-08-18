@@ -2,7 +2,7 @@
   <div class="tab-pane active show" id="home" role="tabpanel">
     <h6 class="mb-0">Data Anco berikut adalah data hanco hari ini!</h6>
     <div class="row justify-content-between">
-      <div class="col-xxl-2 col-md-3 border m-3 px-4 py-3">
+      <div class="col-xxl-3 col-lg-3 col-xl-3 col-md-3 border m-3 px-4 py-3">
         <div class="float-end">
           <button id="btnGroupVerticalDrop1" type="button" class="btn btn-waves btn-sm" data-bs-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">

@@ -4,7 +4,7 @@
       <div class="card">
         <div class="card-body">
           <div class="row justify-content-end">
-            <div class="col-md-3 col-xxl-2 my-2">
+            <div class="col-md-3 col-xxl-3 my-2">
               <div class="input-group">
                 <select name="kolam" id="kolam" class="form-select">
                   <option value="1">Kolam 1</option>
@@ -18,7 +18,7 @@
                 </button>
               </div>
             </div>
-            <div class="col-md-5 col-xxl-7 my-2"></div>
+            <div class="col-md-5 col-xxl-6 my-2"></div>
             <div class="col-md-4 col-xxl-3 my-2">
               <ul class="nav nav-tabs mb-3 justify-content-end" role="tablist">
                 <li class="nav-item" role="presentation">
