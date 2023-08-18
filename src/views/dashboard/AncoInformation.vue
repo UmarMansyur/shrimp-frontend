@@ -8,7 +8,7 @@
             aria-haspopup="true" aria-expanded="false">
             <i class="ri-more-fill"></i>
           </button>
-          <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop1" style="">
+          <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop1">
             <a class="dropdown-item" href="#">Edit</a>
             <a class="dropdown-item" href="#">Hapus</a>
           </div>

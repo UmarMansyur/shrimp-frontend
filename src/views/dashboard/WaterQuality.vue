@@ -7,20 +7,20 @@
       </div>
       <div class="col-md-12 mt-5 text-dark">
         <div class="table-responsive">
-          <table class="table table-hover table-bordered text-center">
+          <table class="table table-hover table-bordered text-center" aria-describedby="water-quality">
             <thead class="align-middle">
               <tr>
-                <th rowspan="2">No</th>
-                <th rowspan="2">pH</th>
-                <th rowspan="2">Salinitas</th>
-                <th rowspan="2">Suhu</th>
-                <th rowspan="2">DO</th>
-                <th rowspan="2">Warna Air</th>
-                <th colspan="2">Aksi</th>
+                <th  scope="col" rowspan="2" >No</th>
+                <th  scope="col" rowspan="2">pH</th>
+                <th  scope="col" rowspan="2">Salinitas</th>
+                <th  scope="col" rowspan="2">Suhu</th>
+                <th  scope="col" rowspan="2">DO</th>
+                <th  scope="col" rowspan="2">Warna Air</th>
+                <th scope="col" colspan="2">Aksi</th>
               </tr>
               <tr>
-                <th>Edit</th>
-                <th>Hapus</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Hapus</th>
               </tr>
             </thead>
             <tbody>
