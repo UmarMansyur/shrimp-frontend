@@ -51,16 +51,91 @@
           <div class="tab-content text-muted overflow-hidden">
             <AncoInformation />
             <WaterQuality />
+            <div class="tab-pane" id="messages" role="tabpanel">
+              <h6>Pakan</h6>
+              <div class="table-responsive">
+                <table class="table table-hover table-bordered text-center">
+                  <thead class="align-middle">
+                    <tr>
+                      <th scope="col" rowspan="2">Tanggal Tebar</th>
+                      <th scope="col" rowspan="2">DOC</th>
+                      <th scope="col" rowspan="2" class="text-start">Waktu</th>
+                      <th scope="col" rowspan="2" style="width: 10%;">Jumlah(Kg)</th>
+                      <th scope="col" rowspan="2">Catatan</th>
+                      <th scope="col" colspan="2" rowspan="2">Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>asdf</td>
+                      <td>2</td>
+                      <td class="text-start">adf</td>
+                      <td>adfadf</td>
+                      <td>
+                        <button class="btn btn-primary btn-sm">
+                          <i class="bx bx-message"></i> Lihat
+                        </button>
+                      </td>
+                      <td>
+                        <button class="btn btn-info btn-sm">
+                          <i class="bx bx-pencil"></i> Edit
+                        </button>
+                      </td>
+                      <td>
+                        <button class="btn btn-danger btn-sm">
+                          <i class="bx bx-trash"></i> Hapus
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
             <div class="tab-pane" id="settings" role="tabpanel">
-              <h6>Settings</h6>
-              <p class="mb-0">
-                Trust fund seitan letterpress, keytar raw denim keffiyeh etsy
-                art party before they sold out master cleanse gluten-free squid
-                scenester freegan cosby sweater. Fanny pack portland seitan DIY,
-                art party locavore wolf cliche high life echo park Austin. Cred
-                vinyl keffiyeh DIY salvia PBR, banh mi before they sold out
-                farm-to-table VHS.
-              </p>
+              <h6>Kimia</h6>
+              <div class="table-responsive">
+                <table class="table table-hover table-borderless table-striped text-center text-dark">
+                  <thead class="align-middle">
+                    <tr>
+                      <th scope="col" rowspan="2" class="text-start">Tanggal Tebar</th>
+                      <th scope="col" rowspan="2">DOC</th>
+                      <th scope="col" rowspan="2" class="text-start">Waktu</th>
+                      <th scope="col" colspan="4" class="text-center">Parameter</th>
+                      <th scope="col" rowspan="2">Aksi</th>
+                    </tr>
+                    <tr>
+                      <th scope="col">Amonia</th>
+                      <th scope="col">Nitrit</th>
+                      <th scope="col">Nitrat</th>
+                      <th scope="col">Alkalinitas</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="text-start">asdf</td>
+                      <td>2</td>
+                      <td class="text-start">adf</td>
+                      <td>adfadf</td>
+                      <td>
+                        <button class="btn btn-primary btn-sm">
+                          <i class="bx bx-message"></i> Catatan
+                        </button>
+                      </td>
+                      <td>adf
+                      </td>
+                      <td>asdf</td>
+                      <td>
+                        <button class="btn btn-info btn-sm mx-2">
+                          <i class="bx bx-pencil"></i>
+                        </button>
+                        <button class="btn btn-danger btn-sm">
+                          <i class="bx bx-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div><!-- end card-body -->

@@ -8,6 +8,22 @@ const routes: Array<RouteRecordRaw> = [
       title: 'Dashboard'
     },
     component: () => import("../views/dashboard/Index.vue"),
+  },
+  {
+    path: "/pond",
+    name: 'Tambak',
+    meta: {
+      title: 'Tambak'
+    },
+    component: () => import("../views/pond/Index.vue"),
+  },
+  {
+    path: "/pond/create",
+    name: 'Tambah Tambak',
+    meta: {
+      title: 'Tambah Tambak'
+    },
+    component: () => import("../views/pond/Add.vue"),
   }
 ];
 

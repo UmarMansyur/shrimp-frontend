@@ -13,7 +13,7 @@ onMounted(() => { loadChart(); });
 
 const loadChart = () => {
   const options = {
-    type: "line",
+    type: "bar",
     data: {
       labels: [
         "January",
