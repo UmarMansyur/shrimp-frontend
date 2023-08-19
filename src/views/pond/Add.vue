@@ -12,19 +12,16 @@
 
                 <ul class="nav nav-pills custom-nav nav-justified" role="tablist">
                   <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="steparrow-gen-info-tab" data-bs-toggle="pill"
-                      data-bs-target="#steparrow-gen-info" type="button" role="tab" aria-controls="steparrow-gen-info"
+                    <button class="nav-link active" id="steparrow-gen-info-tab" type="button" role="tab" aria-controls="steparrow-gen-info"
                       aria-selected="true" data-position="0">Langkah 1</button>
                   </li>
                   <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="steparrow-description-info-tab" data-bs-toggle="pill"
-                      data-bs-target="#steparrow-description-info" type="button" role="tab"
+                    <button class="nav-link" id="steparrow-description-info-tab" type="button" role="tab"
                       aria-controls="steparrow-description-info" aria-selected="false" data-position="1"
                       tabindex="-1">Langkah 2</button>
                   </li>
                   <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="pills-experience-tab" data-bs-toggle="pill"
-                      data-bs-target="#pills-experience" type="button" role="tab" aria-controls="pills-experience"
+                    <button class="nav-link" id="pills-experience-tab" type="button" role="tab" aria-controls="pills-experience"
                       aria-selected="false" data-position="2" tabindex="-1">Selesai</button>
                   </li>
                 </ul>
@@ -45,7 +42,7 @@
                       <div class="col-lg-12">
                         <div class="mb-3">
                           <label class="form-label" for="provinsi">Provinsi: </label>
-                          <select name="provinsi" id="provinsi" class="form-select"></select>
+                          <select name="provinsi" id="provinsi" class="form-select" placeholder=""></select>
                         </div>
                       </div>
                       <div class="col-lg-12">
@@ -100,7 +97,7 @@
                       data-previous="steparrow-gen-info-tab" @click="prev()"><i
                         class="ri-arrow-left-line label-icon align-middle fs-16 me-2"></i> Back to General</button>
                     <button type="button" class="btn btn-success btn-label right ms-auto nexttab nexttab"
-                      data-nexttab="pills-experience-tab" @click="prev()"><i
+                      data-nexttab="pills-experience-tab" @click="next()"><i
                         class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>Submit</button>
                   </div>
                 </div>
@@ -115,6 +112,9 @@
                     </div>
                     <h5>Well Done !</h5>
                     <p class="text-muted">You have Successfully Signed Up</p>
+                    <RouterLink to="/dashboard" class="btn btn-primary">
+                      Back To Main Menu
+                    </RouterLink>
                   </div>
                 </div>
               </div>
