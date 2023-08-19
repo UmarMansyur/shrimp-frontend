@@ -31,33 +31,33 @@
               </div>
 
               <div class="tab-content">
-                <div class="tab-pane fade active show" id="steparrow-gen-info" role="tabpanel"
+                <div class="tab-pane fade active show" data-position="0" id="steparrow-gen-info" role="tabpanel"
                   aria-labelledby="steparrow-gen-info-tab">
                   <div>
                     <div class="row">
                       <div class="col-lg-12">
                         <div class="mb-3">
-                          <label class="form-label" for="steparrow-gen-info-username-input">Nama Tambak</label>
-                          <input type="text" class="form-control" id="steparrow-gen-info-username-input"
+                          <label class="form-label" for="pond_name">Nama Tambak</label>
+                          <input type="text" class="form-control" id="pond_name"
                             placeholder="Masukkan Nama Tambak">
                         </div>
                       </div>
                       <div class="col-lg-12">
                         <div class="mb-3">
-                          <label class="form-label" for="steparrow-gen-info-username-input">Provinsi: </label>
+                          <label class="form-label" for="provinsi">Provinsi: </label>
                           <select name="provinsi" id="provinsi" class="form-select"></select>
                         </div>
                       </div>
                       <div class="col-lg-12">
                         <div class="mb-3">
-                          <label class="form-label" for="steparrow-gen-info-username-input">Kabupaten: </label>
-                          <select name="provinsi" id="provinsi" class="form-select"></select>
+                          <label class="form-label" for="kabupaten">Kabupaten: </label>
+                          <select name="provinsi" id="kabupaten" class="form-select"></select>
                         </div>
                       </div>
                       <div class="col-lg-12">
                         <div class="mb-3">
-                          <label class="form-label" for="steparrow-gen-info-username-input">Kecamatan: </label>
-                          <select name="provinsi" id="provinsi" class="form-select"></select>
+                          <label class="form-label" for="kecamatan">Kecamatan: </label>
+                          <select name="provinsi" id="kecamatan" class="form-select"></select>
                         </div>
                       </div>
                       <div class="col-lg-12">
@@ -67,21 +67,21 @@
                         </div>
                       </div>
                       <div class="col-lg-12">
-                        <label class="form-label" for="steparrow-gen-info-username-input">Kelurahan: </label>
+                        <label class="form-label" for="address">Alamat Lengkap: </label>
 
-                        <textarea class="form-control" placeholder="Enter Description" id="des-info-description-input"
+                        <textarea class="form-control" placeholder="Enter Description" id="address"
                           rows="3"></textarea>
                       </div>
                     </div>
                   </div>
                   <div class="d-flex align-items-start gap-3 mt-4">
                     <button type="button" class="btn btn-success btn-label right ms-auto nexttab nexttab"
-                      data-nexttab="steparrow-description-info-tab"><i
+                      data-nexttab="steparrow-description-info-tab" @click="next()"><i
                         class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>Go to more info</button>
                   </div>
                 </div>
 
-                <div class="tab-pane fade" id="steparrow-description-info" role="tabpanel"
+                <div class="tab-pane fade" data-position="1" id="steparrow-description-info" role="tabpanel"
                   aria-labelledby="steparrow-description-info-tab">
                   <div>
                     <div class="mb-3">
@@ -97,15 +97,15 @@
                   </div>
                   <div class="d-flex align-items-start gap-3 mt-4">
                     <button type="button" class="btn btn-light btn-label previestab"
-                      data-previous="steparrow-gen-info-tab"><i
+                      data-previous="steparrow-gen-info-tab" @click="prev()"><i
                         class="ri-arrow-left-line label-icon align-middle fs-16 me-2"></i> Back to General</button>
                     <button type="button" class="btn btn-success btn-label right ms-auto nexttab nexttab"
-                      data-nexttab="pills-experience-tab"><i
+                      data-nexttab="pills-experience-tab" @click="prev()"><i
                         class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>Submit</button>
                   </div>
                 </div>
 
-                <div class="tab-pane fade" id="pills-experience" role="tabpanel" aria-labelledby="pills-experience-tab">
+                <div class="tab-pane fade" data-position="2" id="pills-experience" role="tabpanel" aria-labelledby="pills-experience-tab">
                   <div class="text-center">
 
                     <div class="avatar-md mt-5 mb-4 mx-auto">
@@ -126,6 +126,68 @@
   </Parent>
 </template>
 
+<script lang="ts">
+
+</script>
+
 <script setup lang="ts">
 import Parent from '../Parent.vue';
+import { onMounted } from 'vue';
+onMounted(() => {
+  // formWizard();
+})
+
+const next = () => {
+  const tabActive:any = document.querySelector('button.nav-link.active');
+  const tabActivePosition = tabActive.getAttribute('data-position');
+  const nextTabPosition = parseInt(tabActivePosition) + 1;
+  const nextTab:any = document.querySelector(`button[data-position="${nextTabPosition}"]`);
+  tabActive.classList.remove('active');
+  tabActive.classList.add('done');
+  tabActive.setAttribute('aria-selected', 'false');
+  tabActive.setAttribute('tabindex', '-1');
+  nextTab.classList.add('active');
+  nextTab.setAttribute('aria-selected', 'true');
+  nextTab.setAttribute('tabindex', '0');
+
+  const tabContentActive:any = document.querySelector('.tab-pane.fade.active.show');
+  const nextTabContentPosition:any = document.querySelector(`.tab-pane.fade[data-position="${nextTabPosition}"]`);
+  tabContentActive.classList.remove('active');
+  tabContentActive.classList.remove('show');
+  tabContentActive.classList.add('done');
+  tabContentActive.setAttribute('aria-selected', 'false');
+  tabContentActive.setAttribute('tabindex', '-1');
+  nextTabContentPosition.classList.add('active');
+  nextTabContentPosition.classList.add('show');
+  nextTabContentPosition.setAttribute('aria-selected', 'true');
+  nextTabContentPosition.setAttribute('tabindex', '0');
+}
+
+const prev = () => {
+  const tabActive:any = document.querySelector('button.nav-link.active');
+  const tabActivePosition = parseInt(tabActive.getAttribute('data-position'));
+  const prevTabPosition = tabActivePosition - 1;
+  const prevTab:any = document.querySelector(`button[data-position="${prevTabPosition}"]`);
+
+  tabActive.classList.remove('active');
+  tabActive.classList.remove('done');
+  tabActive.setAttribute('aria-selected', 'false');
+  tabActive.setAttribute('tabindex', '-1');
+
+  prevTab.classList.add('active');
+  prevTab.setAttribute('aria-selected', 'true');
+  prevTab.setAttribute('tabindex', '0');
+
+  const tabContentActive:any = document.querySelector('.tab-pane.fade.active.show');
+  const prevTabContentPosition:any = document.querySelector(`.tab-pane.fade[data-position="${prevTabPosition}"]`);
+
+  tabContentActive.classList.remove('active', 'show');
+  tabContentActive.classList.remove('done');
+  tabContentActive.setAttribute('aria-selected', 'false');
+  tabContentActive.setAttribute('tabindex', '-1');
+
+  prevTabContentPosition.classList.add('active', 'show');
+  prevTabContentPosition.setAttribute('aria-selected', 'true');
+  prevTabContentPosition.setAttribute('tabindex', '0');
+};
 </script>
