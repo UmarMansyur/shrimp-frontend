@@ -9,7 +9,6 @@
           <div class="card-body">
             <form action="#" class="form-steps" autocomplete="off">
               <div class="step-arrow-nav mb-4">
-
                 <ul class="nav nav-pills custom-nav nav-justified" role="tablist">
                   <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="steparrow-gen-info-tab" type="button" role="tab" aria-controls="steparrow-gen-info"
@@ -126,9 +125,6 @@
   </Parent>
 </template>
 
-<script lang="ts">
-
-</script>
 
 <script setup lang="ts">
 import Parent from '../Parent.vue';
