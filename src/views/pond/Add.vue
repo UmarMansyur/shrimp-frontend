@@ -73,7 +73,7 @@
                   <div class="d-flex align-items-start gap-3 mt-4">
                     <button type="button" class="btn btn-success btn-label right ms-auto nexttab nexttab"
                       data-nexttab="steparrow-description-info-tab" @click="next()"><i
-                        class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>Go to more info</button>
+                        class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>Selanjutnya</button>
                   </div>
                 </div>
 
@@ -94,10 +94,10 @@
                   <div class="d-flex align-items-start gap-3 mt-4">
                     <button type="button" class="btn btn-light btn-label previestab"
                       data-previous="steparrow-gen-info-tab" @click="prev()"><i
-                        class="ri-arrow-left-line label-icon align-middle fs-16 me-2"></i> Back to General</button>
+                        class="ri-arrow-left-line label-icon align-middle fs-16 me-2"></i> Sebelumnya</button>
                     <button type="button" class="btn btn-success btn-label right ms-auto nexttab nexttab"
                       data-nexttab="pills-experience-tab" @click="next()"><i
-                        class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>Submit</button>
+                        class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>Berikutnya</button>
                   </div>
                 </div>
 
@@ -133,57 +133,29 @@ onMounted(() => {
   // formWizard();
 })
 
-const next = () => {
-  const tabActive:any = document.querySelector('button.nav-link.active');
+function navActiveSelection (el: any, position: string, isNext?: boolean) {
+  const tabActive: any = document.querySelector(el);
   const tabActivePosition = tabActive.getAttribute('data-position');
-  const nextTabPosition = parseInt(tabActivePosition) + 1;
-  const nextTab:any = document.querySelector(`button[data-position="${nextTabPosition}"]`);
-  tabActive.classList.remove('active');
+  const tabPosition: any = isNext ? parseInt(tabActivePosition) + 1 : parseInt(tabActivePosition) - 1;
+  const tab: any = document.querySelector(position + `[data-position="${tabPosition}"]`);
+
+
+  tabActive.classList.remove('active', 'done');
   tabActive.classList.add('done');
   tabActive.setAttribute('aria-selected', 'false');
   tabActive.setAttribute('tabindex', '-1');
-  nextTab.classList.add('active');
-  nextTab.setAttribute('aria-selected', 'true');
-  nextTab.setAttribute('tabindex', '0');
-
-  const tabContentActive:any = document.querySelector('.tab-pane.fade.active.show');
-  const nextTabContentPosition:any = document.querySelector(`.tab-pane.fade[data-position="${nextTabPosition}"]`);
-  tabContentActive.classList.remove('active');
-  tabContentActive.classList.remove('show');
-  tabContentActive.classList.add('done');
-  tabContentActive.setAttribute('aria-selected', 'false');
-  tabContentActive.setAttribute('tabindex', '-1');
-  nextTabContentPosition.classList.add('active');
-  nextTabContentPosition.classList.add('show');
-  nextTabContentPosition.setAttribute('aria-selected', 'true');
-  nextTabContentPosition.setAttribute('tabindex', '0');
+  tab.classList.add('active', 'show');
+  tab.setAttribute('aria-selected', 'true');
+  tab.setAttribute('tabindex', '0');
 }
 
+const next = () => {
+  navActiveSelection('button.nav-link.active', 'button', true);
+  navActiveSelection('.tab-pane.fade.active.show', '.tab-pane.fade', true);
+}
 const prev = () => {
-  const tabActive:any = document.querySelector('button.nav-link.active');
-  const tabActivePosition = parseInt(tabActive.getAttribute('data-position'));
-  const prevTabPosition = tabActivePosition - 1;
-  const prevTab:any = document.querySelector(`button[data-position="${prevTabPosition}"]`);
+  navActiveSelection('button.nav-link.active', 'button', false);
+  navActiveSelection('.tab-pane.fade.active.show', '.tab-pane.fade', false);
+}
 
-  tabActive.classList.remove('active');
-  tabActive.classList.remove('done');
-  tabActive.setAttribute('aria-selected', 'false');
-  tabActive.setAttribute('tabindex', '-1');
-
-  prevTab.classList.add('active');
-  prevTab.setAttribute('aria-selected', 'true');
-  prevTab.setAttribute('tabindex', '0');
-
-  const tabContentActive:any = document.querySelector('.tab-pane.fade.active.show');
-  const prevTabContentPosition:any = document.querySelector(`.tab-pane.fade[data-position="${prevTabPosition}"]`);
-
-  tabContentActive.classList.remove('active', 'show');
-  tabContentActive.classList.remove('done');
-  tabContentActive.setAttribute('aria-selected', 'false');
-  tabContentActive.setAttribute('tabindex', '-1');
-
-  prevTabContentPosition.classList.add('active', 'show');
-  prevTabContentPosition.setAttribute('aria-selected', 'true');
-  prevTabContentPosition.setAttribute('tabindex', '0');
-};
 </script>

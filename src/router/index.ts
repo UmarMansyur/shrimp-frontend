@@ -24,6 +24,22 @@ const routes: Array<RouteRecordRaw> = [
       title: 'Tambah Tambak'
     },
     component: () => import("../views/pond/Add.vue"),
+  },
+  {
+    path: "/pool",
+    name: 'Data Kolam',
+    meta: {
+      title: 'Data Kolam'
+    },
+    component: () => import("../views/pool/Index.vue"),
+  },
+  {
+    path: "/pool/create",
+    name: 'Tambah Kolam',
+    meta: {
+      title: 'Tambah Kolam'
+    },
+    component: () => import("../views/pool/Add.vue"),
   }
 ];
 

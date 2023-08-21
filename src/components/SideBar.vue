@@ -30,17 +30,17 @@
           </div>
         </li>
         <li class="nav-item">
-          <RouterLink to="/tambak" class="nav-link menu-link" :class="{ 'active': $route.path.includes('tambak') }">
+          <RouterLink to="/pool" class="nav-link menu-link" :class="{ 'active': $route.path.includes('pool') }">
             <i class="ri-codepen-fill"></i> <span data-key="t-ponds">Data Kolam</span>
           </RouterLink>
         </li>
         <li class="nav-item">
-          <RouterLink to="/tambak" class="nav-link menu-link" :class="{ 'active': $route.path.includes('tambak') }">
+          <RouterLink to="/" class="nav-link menu-link" :class="{ 'active': $route.path.includes('/') }">
             <i class="ri-file-copy-2-line"></i> <span data-key="t-ponds">Laporan</span>
           </RouterLink>
         </li>
         <li class="nav-item">
-          <RouterLink to="/tambak" class="nav-link menu-link" :class="{ 'active': $route.path.includes('tambak') }">
+          <RouterLink to="/" class="nav-link menu-link" :class="{ 'active': $route.path.includes('/') }">
             <i class="ri-links-fill"></i> <span data-key="t-ponds">Data Kelompok</span>
           </RouterLink>
         </li>
