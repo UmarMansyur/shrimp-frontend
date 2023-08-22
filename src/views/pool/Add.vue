@@ -35,12 +35,6 @@
 
 <script setup lang="ts">
 import Parent from '../Parent.vue';
-import GoogleApi from '../../helpers/googleMap';
-import { ref } from 'vue';
-import { onMounted } from 'vue';
-import Map from '../map/Index.vue';
-const autoComplete = ref<any>({});
-onMounted(() => {
-  autoComplete.value = GoogleApi.initAutocomplete();
-})
+import Map from '../../components/Map.vue';
+
 </script>

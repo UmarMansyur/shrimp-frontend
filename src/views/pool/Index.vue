@@ -5,13 +5,13 @@
         <RouterLink to="/pool/create" class="btn btn-outline-primary">Tambah Kolam</RouterLink>
       </div>
       <div class="row">
-        <Map></Map>
+        <PoolMap></PoolMap>
       </div>
     </div>
   </Parent>
 </template>
 
 <script setup lang="ts">
-  import Parent from '../Parent.vue';
-  import Map from '../../components/Map.vue';
+import PoolMap from '../../components/poolMap.vue';
+import Parent from '../Parent.vue';
 </script>

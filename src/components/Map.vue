@@ -1,24 +1,36 @@
 <template>
-  <div class="col-xl-4">
-    <div class="card explore-box card-animate rounded">
-      <div class="explore-place-bid-img">
-        <Map></Map>
-      </div>
-      <div class="card-body">
-        <p class="fw-medium mb-0 float-end"></p>
-        <h5 class="mb-1"><a href="apps-nft-item-details.html">Kolam A</a></h5>
-        <p class="text-muted mb-0">Tambak 1</p>
-      </div>
-      <div class="card-footer border-top border-top-dashed">
-        <div class="d-grid">
-          <button class="btn btn-success">Selengkapnya</button>
-        </div>
-      </div>
-    </div>
-  </div>
+  <div class="map-google" id="map" style="width: 100%; height: 200px;"></div>
 </template>
 
-<script setup lang="ts">
-import Map from '../views/map/Index.vue'
-</script>
 
+<script setup lang="ts">
+import { onMounted } from 'vue';
+import GoogleApi from '../helpers/googleMap';
+
+onMounted(async () => {
+  await GoogleApi.clickMap();
+});
+
+// async function initMap() {
+//   const loader: any = await GoogleApi.getGoogleApi();
+
+//   loader.load().then(async () => {
+//     const { Map } = await google.maps.importLibrary("maps");
+//     for (let a = 1; a < 2; a++) {
+//       let map = new Map(document.querySelector(".map-google"), {
+//         center: { lat: -34.397, lng: 150.644 },
+//         zoom: 8,
+//       });
+
+//       const { Marker } = await google.maps.importLibrary("marker");
+//       new Marker({
+//         position: { lat: -34.397, lng: 150.644 },
+//         map,
+//         title: "Hello World!",
+//       });
+//     }
+//   });
+// }
+
+
+</script>
