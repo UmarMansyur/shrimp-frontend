@@ -6,7 +6,7 @@
       <ul class="navbar-nav" id="navbar-nav">
         <li class="menu-title"><span data-key="t-menu">Menu</span></li>
         <li class="nav-item">
-          <RouterLink to="/dashboard" class="nav-link menu-link" :class="{ 'active': $route.path.includes('dashboard') }">
+          <RouterLink to="/" class="nav-link menu-link" :class="{ 'active': $route.path.includes('dashboard') }">
             <i class="ri-home-4-line"></i> <span data-key="t-dashboards">Beranda</span>
           </RouterLink>
         </li>

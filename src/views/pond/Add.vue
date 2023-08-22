@@ -111,7 +111,7 @@
                     </div>
                     <h5>Well Done !</h5>
                     <p class="text-muted">You have Successfully Signed Up</p>
-                    <RouterLink to="/dashboard" class="btn btn-primary">
+                    <RouterLink to="/" class="btn btn-primary">
                       Back To Main Menu
                     </RouterLink>
                   </div>
