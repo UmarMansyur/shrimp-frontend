@@ -7,7 +7,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: 'Dashboard'
     },
-    component: () => import("../views//Index.vue"),
+    component: () => import("../views/dashboard/Index.vue"),
   },
   {
     path: "/pond",
