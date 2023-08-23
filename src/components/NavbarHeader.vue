@@ -2,8 +2,13 @@
   <div class="navbar-header">
     <div class="d-flex">
       <button type="button" class="btn btn-sm px-3 fs-16 header-item vertical-menu-btn topnav-hamburger"
-        id="topnav-hamburger-icon">
-        <span class="hamburger-icon">
+        @click="toggleMenu()" id="topnav-hamburger-icon">
+        <span class="hamburger-icon" v-if="!isSm">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+        <span class="hamburger-icon open" v-else>
           <span></span>
           <span></span>
           <span></span>
@@ -28,7 +33,7 @@
             <img class="rounded-circle header-profile-user" src="/assets/images/users/avatar-1.jpg" alt="Header Avatar">
             <span class="text-start ms-xl-2">
               <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">
-              Anna Adame</span>
+                Anna Adame</span>
               <span class="d-none d-xl-block ms-1 fs-12 user-name-sub-text">Founder</span>
             </span>
           </span>
@@ -48,3 +53,35 @@
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const isSm = ref(false);
+const toggleMenu = () => {
+  if (window.innerWidth > 922) {
+    if (document.documentElement.getAttribute('data-sidebar-size') === 'lg')
+      document.documentElement.setAttribute('data-sidebar-size', 'sm');
+    else
+      document.documentElement.setAttribute('data-sidebar-size', 'lg');
+  } else {
+  }
+  isSm.value = !isSm.value;
+};
+
+window.addEventListener('click', (e: any) => {
+  if (e.target.closest('#sidebar-menu') == null && e.target.closest('#topnav-hamburger-icon') == null) {
+    document.body.classList.remove('vertical-sidebar-enable');
+    isSm.value = false;
+  } else {
+    document.body.classList.add('vertical-sidebar-enable');
+    isSm.value = true;
+  }
+});
+
+// jika menglik element diluar navbar-header maka navbar-header akan menutup
+
+
+
+
+</script>

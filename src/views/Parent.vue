@@ -5,7 +5,7 @@
         <NavbarHeader />
       </div>
     </header>
-    <div class="app-menu navbar-menu">
+    <div class="app-menu navbar-menu" id="sidebar-menu">
       <Brand />
       <SideBar />
     </div>

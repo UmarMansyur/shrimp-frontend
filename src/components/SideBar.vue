@@ -1,12 +1,10 @@
 <template>
   <div id="scrollbar">
-    <div class="container-fluid">
-      <div id="two-column-menu">
-      </div>
+    <div class="container-fluid" id="two-column-menu" aria-labelledby="two-column-menu">
       <ul class="navbar-nav" id="navbar-nav">
         <li class="menu-title"><span data-key="t-menu">Menu</span></li>
         <li class="nav-item">
-          <RouterLink to="/" class="nav-link menu-link" :class="{ 'active': $route.path.includes('dashboard') }">
+          <RouterLink to="/" class="nav-link menu-link" :class="{ 'active': $route.path == '/' }">
             <i class="ri-home-4-line"></i> <span data-key="t-dashboards">Beranda</span>
           </RouterLink>
         </li>
@@ -35,12 +33,17 @@
           </RouterLink>
         </li>
         <li class="nav-item">
-          <RouterLink to="/" class="nav-link menu-link" :class="{ 'active': $route.path.includes('/') }">
-            <i class="ri-file-copy-2-line"></i> <span data-key="t-ponds">Laporan</span>
+          <RouterLink to="/monitoring" class="nav-link menu-link" :class="{ 'active': $route.path.includes('/monitoring') }">
+            <i class="ri-slideshow-line"></i> <span data-key="t-ponds">Monitoring <sup><i class="ri-magic-line text-warning" style="font-size: 14px;"></i></sup></span>
           </RouterLink>
         </li>
         <li class="nav-item">
-          <RouterLink to="/" class="nav-link menu-link" :class="{ 'active': $route.path.includes('/') }">
+          <RouterLink to="/report" class="nav-link menu-link" :class="{ 'active': $route.path.includes('/report') }">
+            <i class="ri-survey-line"></i> <span data-key="t-ponds">Laporan</span>
+          </RouterLink>
+        </li>
+        <li class="nav-item">
+          <RouterLink to="/group" class="nav-link menu-link" :class="{ 'active': $route.path.includes('/group') }">
             <i class="ri-links-fill"></i> <span data-key="t-ponds">Data Kelompok</span>
           </RouterLink>
         </li>

@@ -40,13 +40,12 @@ class GoogleApi {
 
   public static async getCurrentLocation(): Promise<any> {
     await GoogleApi.getGoogleApi().then(async () => {
-      // get current location
       navigator.geolocation.getCurrentPosition((position) => {
         const pos = {
           lat: position.coords.latitude,
           lng: position.coords.longitude,
         };
-        return pos;
+        GoogleApi.addMarker(pos, GoogleApi.autoComplete);
       });
     });
   }
@@ -68,21 +67,29 @@ class GoogleApi {
   public static async clickMap(): Promise<void> {
     await GoogleApi.getGoogleApi().then(async () => {
       const { Map } = await google.maps.importLibrary("maps");
-      const pos = await GoogleApi.getCurrentLocation();
-      const map = new Map(document.getElementById("map"), {
-        center: pos,
-        zoom: 13,
-        allowFullScreen: true,
-        fullscreenControl: true,
-        fullscreenControlOptions: {
-          position: google.maps.ControlPosition.RIGHT_BOTTOM,
-        },
 
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        const pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
+
+
+        const map = new Map(document.getElementById("map"), {
+          center: pos,
+          zoom: 18,
+          allowFullScreen: true,
+          fullscreenControl: true,
+          fullscreenControlOptions: {
+            position: google.maps.ControlPosition.RIGHT_BOTTOM,
+          },
+        });
+        await GoogleApi.addMarker(pos, map);
+        google.maps.event.addListener(map, "click", function (event: any) {
+          GoogleApi.addMarker(event.latLng, map);
+        });
       });
 
-      google.maps.event.addListener(map, "click", function (event: any) {
-        GoogleApi.addMarker(event.latLng, map);
-      });
     });
   }
 

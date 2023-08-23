@@ -40,6 +40,22 @@ const routes: Array<RouteRecordRaw> = [
       title: 'Tambah Kolam'
     },
     component: () => import("../views/pool/Add.vue"),
+  },
+  {
+    path: '/report/',
+    name: 'Laporan',
+    meta: {
+      title: 'Laporan'
+    },
+    component: () => import("../views/report/Index.vue"),
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'Not Found',
+    meta: {
+      title: 'Not Found'
+    },
+    component: () => import("../views/NotFound.vue"),
   }
 ];
 
