@@ -60,23 +60,30 @@ import { ref } from 'vue';
 const isSm = ref(false);
 const toggleMenu = () => {
   if (window.innerWidth > 922) {
-    if (document.documentElement.getAttribute('data-sidebar-size') === 'lg')
+    if (document.documentElement.getAttribute('data-sidebar-size') === 'lg') {
       document.documentElement.setAttribute('data-sidebar-size', 'sm');
-    else
+    } else {
       document.documentElement.setAttribute('data-sidebar-size', 'lg');
-  } else {
+    }
+    isSm.value = !isSm.value;
   }
-  isSm.value = !isSm.value;
 };
 
 window.addEventListener('click', (e: any) => {
-  if (e.target.closest('#sidebar-menu') == null && e.target.closest('#topnav-hamburger-icon') == null) {
-    document.body.classList.remove('vertical-sidebar-enable');
-    isSm.value = false;
+  if (e.target.closest('#topnav-hamburger-icon')) {
+    if(window.innerWidth < 922) {
+      document.body.classList.add('vertical-sidebar-enable');
+    }
+  } else if(e.target.closest('#sidebar-menu')) {
+    if(window.innerWidth < 922) {
+      document.body.classList.add('vertical-sidebar-enable');
+    }
   } else {
-    document.body.classList.add('vertical-sidebar-enable');
-    isSm.value = true;
+    if(window.innerWidth < 922) {
+      document.body.classList.remove('vertical-sidebar-enable');
+    }
   }
+
 });
 
 // jika menglik element diluar navbar-header maka navbar-header akan menutup
