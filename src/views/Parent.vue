@@ -9,6 +9,7 @@
       <Brand />
       <SideBar />
     </div>
+    <div class="vertical-overlay" @click="disableToggle()"></div>
     <div class="main-content">
       <div class="page-content">
         <div class="container-fluid">
@@ -23,4 +24,7 @@
 
 <script setup lang="ts">
 import { Brand, Footer, NavbarHeader, PageContent, SideBar } from '../helpers/components';
+const disableToggle = () => {
+  document.body.classList.remove('vertical-sidebar-enable');
+}
 </script>

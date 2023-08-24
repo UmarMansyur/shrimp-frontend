@@ -18,15 +18,9 @@
                 </div>
               </div>
             </div>
-            <!-- end card -->
           </div>
-          <!-- end col -->
-
         </div>
-        <!-- end row -->
       </div>
-      <!-- end container -->
     </div>
-    <!-- end auth page content -->
   </div>
 </template> 

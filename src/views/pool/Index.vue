@@ -4,7 +4,7 @@
       <div class="col-12 mb-3 text-end">
         <RouterLink to="/pool/create" class="btn btn-outline-primary">Tambah Kolam</RouterLink>
       </div>
-      <div class="row">
+      <div class="col-12">
         <PoolMap></PoolMap>
       </div>
     </div>

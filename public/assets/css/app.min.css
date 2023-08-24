@@ -21,6 +21,7 @@
     left: var(--vz-vertical-menu-width);
   }
 }
+
 .navbar-header {
   display: -webkit-box;
   display: -ms-flexbox;

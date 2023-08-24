@@ -3,9 +3,9 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
-    name: 'Dashboard',
+    name: 'Beranda',
     meta: {
-      title: 'Dashboard'
+      title: 'Beranda'
     },
     component: () => import("../views/dashboard/Index.vue"),
   },
@@ -42,6 +42,14 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("../views/pool/Add.vue"),
   },
   {
+    path: "/monitoring",
+    name: 'Monitoring',
+    meta: {
+      title: 'Monitoring'
+    },
+    component: () => import("../views/monitoring/Index.vue"),
+  },
+  {
     path: '/report/',
     name: 'Laporan',
     meta: {
@@ -63,6 +71,11 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
 });
+
+router.beforeEach((to, _from, next) => {
+  document.title = to.meta.title as string
+  next();
+})
 
 
 export default router;

@@ -55,40 +55,28 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 const isSm = ref(false);
 const toggleMenu = () => {
-  if (window.innerWidth > 922) {
+  if (window.innerWidth > 794) {
     if (document.documentElement.getAttribute('data-sidebar-size') === 'lg') {
       document.documentElement.setAttribute('data-sidebar-size', 'sm');
     } else {
       document.documentElement.setAttribute('data-sidebar-size', 'lg');
     }
     isSm.value = !isSm.value;
+  } else {
+    document.body.classList.add('twocolumn-panel');
+    document.body.classList.add('vertical-sidebar-enable');
   }
 };
 
-window.addEventListener('click', (e: any) => {
-  if (e.target.closest('#topnav-hamburger-icon')) {
-    if(window.innerWidth < 922) {
-      document.body.classList.add('vertical-sidebar-enable');
-    }
-  } else if(e.target.closest('#sidebar-menu')) {
-    if(window.innerWidth < 922) {
-      document.body.classList.add('vertical-sidebar-enable');
-    }
-  } else {
-    if(window.innerWidth < 922) {
-      document.body.classList.remove('vertical-sidebar-enable');
-    }
+onMounted(() => {
+  if(window.innerWidth < 794) {
+    document.body.classList.add('twocolumn-panel');
+    document.body.classList.remove('vertical-sidebar-enable');
   }
-
 });
-
-// jika menglik element diluar navbar-header maka navbar-header akan menutup
-
-
-
 
 </script>

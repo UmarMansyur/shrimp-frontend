@@ -1,5 +1,5 @@
 <template>
-  <div class="col-xl-4">
+  <div class="col-xl-3">
     <div class="card explore-box card-animate rounded">
       <div class="explore-place-bid-img">
         <Map></Map>

@@ -1,6 +1,6 @@
 <template>
   <div id="scrollbar">
-    <div class="container-fluid" id="two-column-menu" aria-labelledby="two-column-menu">
+    <div class="container-fluid">
       <ul class="navbar-nav" id="navbar-nav">
         <li class="menu-title"><span data-key="t-menu">Menu</span></li>
         <li class="nav-item">

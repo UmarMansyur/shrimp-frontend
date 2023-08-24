@@ -1,5 +1,5 @@
 <template>
-  <div class="map-google" id="map" style="width: 100%; height: 300px;"></div>
+  <div class="map-google card-body" id="map" style="width: 100%; height: 300px;"></div>
 </template>
 
 

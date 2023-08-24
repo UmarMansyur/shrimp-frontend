@@ -11,18 +11,18 @@
       </div>
     </div>
     <div class="row mb-3">
-      <div class="col-md-2">
+      <div class="col-md-2 mb-3 col-sm-3">
         <select name="pool" id="pool" class="form-select">
           <option value="">Tambak 1</option>
         </select>
       </div>
-      <div class="col-md-2">
+      <div class="col-md-2 mb-3 col-sm-3">
         <select name="pool" id="pool" class="form-select">
           <option value="">Semua</option>
         </select>
       </div>
-      <div class="col-md-2"></div>
-      <div class="col-md-6 mb-3 text-end">
+      <div class="col-md-2 mb-3 col-sm-2"></div>
+      <div class="col-md-6 mb-3 col-sm-4 text-end">
         <button class="btn waves btn-success"><i class="bx bx-download"></i></button>
         <button class="btn waves btn-warning mx-1"><i class="bx bx-printer"></i></button>
         <button class="btn waves btn-outline-primary"><i class="bx bx-filter"></i> Filter</button>
