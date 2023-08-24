@@ -58,6 +58,14 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("../views/report/Index.vue"),
   },
   {
+    path: '/profile/',
+    name: 'Profile',
+    meta: {
+      title: 'Profile'
+    },
+    component: () => import("../views/profile/Index.vue"),
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'Not Found',
     meta: {

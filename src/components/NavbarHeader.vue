@@ -17,12 +17,18 @@
     </div>
     <div class="d-flex align-items-center">
       <div class="ms-1 header-item d-none d-sm-flex">
-        <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle" data-toggle="fullscreen">
+        <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle" @click="makeFullScreen()"
+          v-if="isFullScreen">
           <i class='bx bx-fullscreen fs-22'></i>
+        </button>
+        <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle" @click="exitFullScreen()"
+          v-else>
+          <i class='bx bx-exit-fullscreen fs-22'></i>
         </button>
       </div>
       <div class="ms-1 header-item d-none d-sm-flex">
-        <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle light-dark-mode">
+        <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle light-dark-mode"
+          @click="handleTheme">
           <i class='bx bx-moon fs-22'></i>
         </button>
       </div>
@@ -40,10 +46,10 @@
         </button>
         <div class="dropdown-menu dropdown-menu-end">
           <h6 class="dropdown-header">Welcome Anna!</h6>
-          <a class="dropdown-item" href="pages-profile.html">
+          <RouterLink to="/profile" class="dropdown-item">
             <i class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i>
             <span class="align-middle">Profile</span>
-          </a>
+          </RouterLink>
           <a class="dropdown-item" href="auth-logout-basic.html">
             <i class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i>
             <span class="align-middle" data-key="t-logout">Logout</span>
@@ -55,25 +61,17 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-
-const isSm = ref(false);
-const toggleMenu = () => {
-  if (window.innerWidth > 794) {
-    if (document.documentElement.getAttribute('data-sidebar-size') === 'lg') {
-      document.documentElement.setAttribute('data-sidebar-size', 'sm');
-    } else {
-      document.documentElement.setAttribute('data-sidebar-size', 'lg');
-    }
-    isSm.value = !isSm.value;
-  } else {
-    document.body.classList.add('twocolumn-panel');
-    document.body.classList.add('vertical-sidebar-enable');
-  }
-};
-
+import { onMounted } from 'vue';
+import {
+  isSm,
+  toggleMenu,
+  isFullScreen,
+  makeFullScreen,
+  exitFullScreen,
+  handleTheme
+} from '../helpers/handleEvent.ts';
 onMounted(() => {
-  if(window.innerWidth < 794) {
+  if (window.innerWidth < 794) {
     document.body.classList.add('twocolumn-panel');
     document.body.classList.remove('vertical-sidebar-enable');
   }

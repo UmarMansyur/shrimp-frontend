@@ -24,7 +24,7 @@
       </div>
     </div>
     <div class="row mt-3">
-      <div class="col-12">
+      <div class="col-md-12 align-items-center">
         <StartSycle/>
         <Feed/>
         <Anco/>
