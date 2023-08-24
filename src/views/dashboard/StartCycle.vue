@@ -22,7 +22,6 @@
         <button class="btn btn-success" data-bs-dismiss="modal">
           <i class="bx bx-send"></i> Simpan
         </button>
-
       </div>
     </div>
   </Modal>

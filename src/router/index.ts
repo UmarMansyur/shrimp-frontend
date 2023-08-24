@@ -66,6 +66,14 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("../views/profile/Index.vue"),
   },
   {
+    path: '/profile/edit',
+    name: 'Edit Profile',
+    meta: {
+      title: 'Edit Profile'
+    },
+    component: () => import("../views/profile/EditProfile.vue"),
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'Not Found',
     meta: {
@@ -81,9 +89,9 @@ const router = createRouter({
 });
 
 router.beforeEach((to, _from, next) => {
-  document.title = to.meta.title as string
+  document.title = to.meta.title as string;
   next();
-})
+});
 
 
 export default router;

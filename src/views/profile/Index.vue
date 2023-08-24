@@ -51,8 +51,8 @@
               </li>
             </ul>
             <div class="flex-shrink-0">
-              <a href="pages-profile-settings.html" class="btn btn-success"><i class="ri-edit-box-line align-bottom"></i>
-                Edit Profile</a>
+              <RouterLink to="/profile/edit" class="btn btn-success"><i class="ri-edit-box-line align-bottom"></i>
+                Edit Profile</RouterLink>
             </div>
           </div>
           <!-- Tab panes -->
@@ -109,20 +109,34 @@
                   </div><!-- end card -->
                 </div>
               </div>
-              <!--end row-->
             </div>
             <div class="tab-pane fade" id="activities" role="tabpanel">
               <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title mb-3">Activities</h5>
-                
+                  <h5 class="card-title mb-3">Akun</h5>
+                  <div class="row">
+                    <div class="col-md-12 mb-3">
+                      <label for="username" class="form-label">Username: </label>
+                      <input type="search" id="username" name="username" class="form-control" autocomplete="false">
+                    </div>
+                    <div class="col-md-12 mb-3">
+                      <label for="password" class="form-label">Password: </label>
+                      <input type="password" id="password" name="password" class="form-control" autocomplete="false">
+                    </div>
+                    <div class="col-md-12 mb-3">
+                      <label for="confirmation_password" class="form-label">Konfirmasi Password: </label>
+                      <input type="password" id="confirmation_password" name="confirmation_password" class="form-control" autocomplete="false">
+                    </div>
+                    <div class="col-md-12">
+                      <button class="btn btn-success"><i class="bx bx-send"></i> Simpan</button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <!--end col-->
     </div>
   </Parent>
 </template>
