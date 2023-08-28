@@ -1,4 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import { useSessionStore } from "../stores/session";
+import { ref } from 'vue';
+const isAdmin = ref<Boolean>(false);
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -26,6 +29,14 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("../views/pond/Add.vue"),
   },
   {
+    path: "/pond/:id",
+    name: 'Edit Tambak',
+    meta: {
+      title: 'Edit Tambak'
+    },
+    component: () => import("../views/pond/Add.vue"),
+  },
+  {
     path: "/pool",
     name: 'Data Kolam',
     meta: {
@@ -38,6 +49,14 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Tambah Kolam',
     meta: {
       title: 'Tambah Kolam'
+    },
+    component: () => import("../views/pool/Add.vue"),
+  },
+  {
+    path: "/pool/:id",
+    name: 'Edit Kolam',
+    meta: {
+      title: 'Edit Kolam'
     },
     component: () => import("../views/pool/Add.vue"),
   },
@@ -80,6 +99,14 @@ const routes: Array<RouteRecordRaw> = [
       title: 'Not Found'
     },
     component: () => import("../views/NotFound.vue"),
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    meta: {
+      title: 'Login'
+    },
+    component: () => import("../views/authentication/Parent.vue"),
   }
 ];
 
@@ -88,9 +115,22 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, _from, next) => {
-  document.title = to.meta.title as string;
-  next();
+router.beforeEach(async (to, _from) => {
+  document.title = to.meta.title as string + ' | Bincang Budidaya Udang';
+  const { setUser, getUser } = useSessionStore();
+  if (to.name != 'Login' && (!sessionStorage.getItem('token') || sessionStorage.getItem('token')!.length <= 13)) {
+    return { path: '/login' };
+  }
+
+  if (sessionStorage.getItem('token') && to.name == 'Login') {
+    return { path: '/' };
+  }
+  if (sessionStorage.getItem('token')  && to.name != 'login' && to.name != 'NotFound') {
+    if (getUser.id === 0) {
+      await setUser();
+      isAdmin.value = getUser.role == 'Administrator' ? true : false;
+    }
+  }
 });
 
 

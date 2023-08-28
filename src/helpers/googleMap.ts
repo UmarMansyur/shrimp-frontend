@@ -1,111 +1,74 @@
-import { Loader } from "@googlemaps/js-api-loader";
 declare const google: any;
-class GoogleApi {
-  protected static googleapi: any;
-  static autoComplete: any;
+import { Loader } from "@googlemaps/js-api-loader";
+import { ref } from "vue";
 
-  public constructor() {
-    if (!GoogleApi.googleapi) {
-      GoogleApi.googleapi = new Loader({
-        apiKey: import.meta.env.VITE_API_GOOGLE,
-        version: "weekly",
-        libraries: ['places'],
-      });
-      return;
-    }
-    return GoogleApi.googleapi;
-  }
+const googleApi: any = new Loader({
+  apiKey: import.meta.env.VITE_API_GOOGLE,
+  version: "weekly",
+  libraries: ["places"],
+});
 
-  public static async getGoogleApi(): Promise<any> {
-    if (!GoogleApi.googleapi) {
-      new GoogleApi();
-      await GoogleApi.googleapi.load();
-    }
-    return GoogleApi.googleapi;
-  }
+export default function useGoogleApi() {
 
-  public static async initMap(e: string): Promise<void> {
-    await GoogleApi.getGoogleApi().then(async () => {
-      const { Map } = await google.maps.importLibrary("maps");
-      const map = new Map(document.getElementById(e), {
-      });
-      // get current location
-      const pos = await GoogleApi.getCurrentLocation();
-      // set marker
-      GoogleApi.addMarker(pos, map);
-      // set center map
-      map.setCenter(pos);
-    });
-  }
+  const isActiveClick = ref<Boolean>(true);
+  const location = ref<any>({
+    lat: "",
+    lng: "",
+  });
 
-  public static async getCurrentLocation(): Promise<any> {
-    await GoogleApi.getGoogleApi().then(async () => {
-      navigator.geolocation.getCurrentPosition((position) => {
-        const pos = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        };
-        GoogleApi.addMarker(pos, GoogleApi.autoComplete);
-      });
-    });
-  }
+  async function clickMap() {
+    await googleApi.load();
+    const { Map } = await google.maps.importLibrary("maps");
 
-
-
-  public static async initAutocomplete(): Promise<void> {
-    await GoogleApi.getGoogleApi().then(async () => {
-      const input = document.getElementById("autocomplete");
-      const options = {
-        componentRestrictions: { country: "id" },
-        fields: ["address_components", "geometry", "icon", "name"],
-        strictBounds: false,
+    navigator.geolocation.getCurrentPosition(async (position) => {
+      const pos = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
       };
-      new google.maps.places.Autocomplete(input, options);
-    });
-  }
-
-  public static async clickMap(): Promise<void> {
-    await GoogleApi.getGoogleApi().then(async () => {
-      const { Map } = await google.maps.importLibrary("maps");
-
-      navigator.geolocation.getCurrentPosition(async (position) => {
-        const pos = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        };
-
-
-        const map = new Map(document.getElementById("map"), {
-          center: pos,
-          zoom: 18,
-          allowFullScreen: true,
-          fullscreenControl: true,
-          fullscreenControlOptions: {
-            position: google.maps.ControlPosition.RIGHT_BOTTOM,
-          },
-        });
-        await GoogleApi.addMarker(pos, map);
-        google.maps.event.addListener(map, "click", function (event: any) {
-          GoogleApi.addMarker(event.latLng, map);
-        });
+      location.value = pos;
+      const map = new Map(document.getElementById("map"), {
+        center: pos,
+        zoom: 15,
+        allowFullScreen: true,
+        fullscreenControl: true,
+        fullscreenControlOptions: {
+          position: google.maps.ControlPosition.RIGHT_BOTTOM,
+        },
       });
-
+      await setMarker(pos, map);
+      if (isActiveClick.value) {
+        google.maps.event.addListener(map, "click", async (event: any) => {
+          location.value = {
+            lat: event.latLng.lat(),
+            lng: event.latLng.lng(),
+          }
+          await setMarker(event.latLng, map);
+        });
+      }
     });
   }
 
-  public static async addMarker(location: any, map: any): Promise<void> {
+  async function setMarker(location: any, map: any) {
     const { Marker } = await google.maps.importLibrary("marker");
-    // jika ada marker sebelumnya maka hapus
-    if (GoogleApi.autoComplete) {
-      GoogleApi.autoComplete.setMap(null);
+    if (googleApi.autoComplete) {
+      googleApi.autoComplete.setMap(null);
     }
-    // set marker baru
-    GoogleApi.autoComplete = new Marker({
+    googleApi.autoComplete = new Marker({
       position: location,
       map,
     });
   }
 
-}
+  function disabledClick() {
+    isActiveClick.value = false;
+  }
 
-export default GoogleApi;
+  function enableClick() {
+    isActiveClick.value = true;
+  }
+
+  return {
+    clickMap, googleApi, disabledClick, enableClick, location
+  };
+
+}

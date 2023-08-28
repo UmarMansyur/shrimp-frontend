@@ -13,9 +13,9 @@
                   <option value="4">Kolam 4</option>
                   <option value="5">Kolam 5</option>
                 </select>
-                <button class="btn btn-primary btn-md">
-                  <i class="ri-codepen-fill fs-5"></i>
-                </button>
+                <div class="input-group-text bg-primary border-primary text-white">
+                  <i class="ri-codepen-fill"></i>
+                </div>
               </div>
             </div>
             <div class="col-md-5 col-xxl-6 my-2"></div>

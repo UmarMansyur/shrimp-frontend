@@ -1,5 +1,5 @@
 <template>
-  <div class="layout-wrapper">
+  <div class="layout-wrapper placeholder-glow">
     <header id="page-topbar">
       <div class="layout-width">
         <NavbarHeader />
@@ -26,5 +26,5 @@
 import { Brand, Footer, NavbarHeader, PageContent, SideBar } from '../helpers/components';
 const disableToggle = () => {
   document.body.classList.remove('vertical-sidebar-enable');
-}
+};
 </script>

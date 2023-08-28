@@ -1,4 +1,5 @@
 import { ref } from 'vue';
+declare const bootstrap: any;
 
 const isSm = ref(false);
 const toggleMenu = () => {
@@ -53,6 +54,23 @@ const handleTheme = () => {
   }
 }
 
+const carousels = (id: string) => {
+  new bootstrap.Carousel(document.getElementById(id), {
+    interval: 3000,
+    pause: false
+  })
+}
+
+const togglePassword = () => {
+  let passwordInput: any = document.querySelector('#password-input');
+  if(passwordInput.type == 'text') {
+    passwordInput.type = 'password';
+  } else {
+    passwordInput.type = 'text';
+  }
+
+}
+
 
 export {
   isSm,
@@ -60,5 +78,7 @@ export {
   isFullScreen,
   makeFullScreen,
   exitFullScreen,
-  handleTheme
+  handleTheme,
+  carousels,
+  togglePassword
 };

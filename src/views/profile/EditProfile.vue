@@ -71,150 +71,60 @@
                     <div class="col-lg-6">
                       <div class="mb-3">
                         <label for="fullname" class="form-label">Nama Lengkap: </label>
-                        <input type="text" class="form-control" id="fullname" placeholder="Masukkan Nama Lengkap" autocomplete="false">
+                        <input type="text" class="form-control" id="fullname" placeholder="Masukkan Nama Lengkap"
+                          autocomplete="false">
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="mb-3">
                         <label for="email" class="form-label">Email: </label>
-                        <input type="text" class="form-control" id="email" placeholder="Enter your lastname"
-                          value="Adame">
+                        <input type="text" class="form-control" id="email" placeholder="Masukkan Email">
                       </div>
                     </div>
                     <!--end col-->
                     <div class="col-lg-6">
                       <div class="mb-3">
-                        <label for="phonenumberInput" class="form-label">Phone Number</label>
-                        <input type="text" class="form-control" id="phonenumberInput"
-                          placeholder="Enter your phone number" value="+(1) 987 6543">
+                        <label for="phonenumberInput" class="form-label">Nomer Hp: </label>
+                        <input type="text" class="form-control" id="phonenumberInput" placeholder="Maskkan Nomer Hp">
                       </div>
                     </div>
                     <!--end col-->
-                    <div class="col-lg-6">
-                      <div class="mb-3">
-                        <label for="emailInput" class="form-label">Email Address</label>
-                        <input type="email" class="form-control" id="emailInput" placeholder="Enter your email"
-                          value="daveadame@velzon.com">
-                      </div>
-                    </div>
-                    <!--end col-->
-                    <div class="col-lg-12">
-                      <div class="mb-3">
-                        <label for="JoiningdatInput" class="form-label">Joining Date</label>
-                        <input type="text" class="form-control flatpickr-input" data-provider="flatpickr"
-                          id="JoiningdatInput" data-date-format="d M, Y" data-deafult-date="24 Nov, 2021"
-                          placeholder="Select date">
-                      </div>
-                    </div>
-                    <!--end col-->
-                    <div class="col-lg-12">
-                      <div class="mb-3">
-                        <label for="skillsInput" class="form-label">Skills</label>
-                        <div class="choices" data-type="select-multiple" role="combobox" aria-autocomplete="list"
-                          aria-haspopup="true" aria-expanded="false">
-                          <div class="choices__inner"><select class="form-control choices__input" name="skillsInput"
-                              data-choices="" data-choices-text-unique-true="" id="skillsInput" tabindex="-1"
-                              data-choice="active">
-                              <option value="javascript" data-custom-properties="[object Object]">Javascript</option>
-                            </select>
-                            <div class="choices__list choices__list--multiple">
-                              <div class="choices__item choices__item--selectable" data-item="" data-id="1"
-                                data-value="javascript" data-custom-properties="[object Object]" aria-selected="true">
-                                Javascript</div>
-                            </div><input type="search" name="search_terms" class="choices__input choices__input--cloned"
-                              autocomplete="off" autocapitalize="off" spellcheck="false" role="textbox"
-                              aria-autocomplete="list" aria-label="null">
-                          </div>
-                          <div class="choices__list choices__list--dropdown" aria-expanded="false">
-                            <div class="choices__list" aria-multiselectable="true" role="listbox">
-                              <div id="choices--skillsInput-item-choice-1"
-                                class="choices__item choices__item--choice choices__item--selectable is-highlighted"
-                                role="option" data-choice="" data-id="1" data-value="css"
-                                data-select-text="Press to select" data-choice-selectable="" aria-selected="true">CSS
-                              </div>
-                              <div id="choices--skillsInput-item-choice-2"
-                                class="choices__item choices__item--choice choices__item--selectable" role="option"
-                                data-choice="" data-id="2" data-value="html" data-select-text="Press to select"
-                                data-choice-selectable="">HTML</div>
-                              <div id="choices--skillsInput-item-choice-3"
-                                class="choices__item choices__item--choice choices__item--selectable" role="option"
-                                data-choice="" data-id="3" data-value="illustrator" data-select-text="Press to select"
-                                data-choice-selectable="">Illustrator</div>
-                              <div id="choices--skillsInput-item-choice-5"
-                                class="choices__item choices__item--choice choices__item--selectable" role="option"
-                                data-choice="" data-id="5" data-value="photoshop" data-select-text="Press to select"
-                                data-choice-selectable="">Photoshop</div>
-                              <div id="choices--skillsInput-item-choice-6"
-                                class="choices__item choices__item--choice choices__item--selectable" role="option"
-                                data-choice="" data-id="6" data-value="php" data-select-text="Press to select"
-                                data-choice-selectable="">PHP</div>
-                              <div id="choices--skillsInput-item-choice-7"
-                                class="choices__item choices__item--choice choices__item--selectable" role="option"
-                                data-choice="" data-id="7" data-value="python" data-select-text="Press to select"
-                                data-choice-selectable="">Python</div>
-                            </div>
-                          </div>
+                    <div class="col-lg-6 mb-3">
+                      <div class="form-label text-dark fw-medium">Jenis Kelamin: </div>
+                      <div class="input-group">
+                        <div class="mt-2">
+                          <input class="form-check-input" type="radio" name="gender" id="male">
+                          <label class="form-check-label ms-2" for="male"> Pria</label>
+                        </div>
+                        <div class="mt-2 mx-5 text-end">
+                          <input class="form-check-input" type="radio" name="gender" id="female">
+                          <label class="form-check-label ms-2" for="female"> Wanita</label>
+                        </div>
+                        <div class="mt-2 text-end">
+                          <input class="form-check-input" type="radio" name="gender" id="other">
+                          <label class="form-check-label ms-2" for="other"> Lainnya</label>
                         </div>
                       </div>
                     </div>
-                    <!--end col-->
-                    <div class="col-lg-6">
-                      <div class="mb-3">
-                        <label for="designationInput" class="form-label">Designation</label>
-                        <input type="text" class="form-control" id="designationInput" placeholder="Designation"
-                          value="Lead Designer / Developer">
-                      </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="birth" class="form-label">Tanggal Lahir: </label>
+                      <VueDatePicker auto-apply format="YYY/MM/DD"></VueDatePicker>
                     </div>
-                    <!--end col-->
-                    <div class="col-lg-6">
-                      <div class="mb-3">
-                        <label for="websiteInput1" class="form-label">Website</label>
-                        <input type="text" class="form-control" id="websiteInput1" placeholder="www.example.com"
-                          value="www.velzon.com">
-                      </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="date_joined" class="form-label">Tanggal Mendaftar: </label>
+                      <VueDatePicker auto-apply format="YYY/MM/DD"></VueDatePicker>
                     </div>
-                    <!--end col-->
-                    <div class="col-lg-4">
-                      <div class="mb-3">
-                        <label for="cityInput" class="form-label">City</label>
-                        <input type="text" class="form-control" id="cityInput" placeholder="City" value="California">
-                      </div>
+                    <div class="col-md-12 mb-3">
+                      <label for="address" class="form-label">Alamat: </label>
+                      <input type="text" name="address" id="address" class="form-control">
                     </div>
-                    <!--end col-->
-                    <div class="col-lg-4">
-                      <div class="mb-3">
-                        <label for="countryInput" class="form-label">Country</label>
-                        <input type="text" class="form-control" id="countryInput" placeholder="Country"
-                          value="United States">
-                      </div>
-                    </div>
-                    <!--end col-->
-                    <div class="col-lg-4">
-                      <div class="mb-3">
-                        <label for="zipcodeInput" class="form-label">Zip Code</label>
-                        <input type="text" class="form-control" minlength="5" maxlength="6" id="zipcodeInput"
-                          placeholder="Enter zipcode" value="90011">
-                      </div>
-                    </div>
-                    <!--end col-->
-                    <div class="col-lg-12">
-                      <div class="mb-3 pb-2">
-                        <label for="exampleFormControlTextarea" class="form-label">Description</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea"
-                          placeholder="Enter your description"
-                          rows="3">Hi I'm Anna Adame,It will be as simple as Occidental; in fact, it will be Occidental. To an English person, it will seem like simplified English, as a skeptical Cambridge friend of mine told me what Occidental is European languages are members of the same family.</textarea>
-                      </div>
-                    </div>
-                    <!--end col-->
                     <div class="col-lg-12">
                       <div class="hstack gap-2 justify-content-end">
                         <button type="submit" class="btn btn-primary">Updates</button>
                         <button type="button" class="btn btn-soft-success">Cancel</button>
                       </div>
                     </div>
-                    <!--end col-->
                   </div>
-                  <!--end row-->
                 </form>
               </div>
             </div>

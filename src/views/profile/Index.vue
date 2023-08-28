@@ -86,6 +86,10 @@
                               <td class="text-muted">Pria</td>
                             </tr>
                             <tr>
+                              <th class="ps-0" scope="row">Tanggal Lahir:</th>
+                              <td class="text-muted">29/07/2001</td>
+                            </tr>
+                            <tr>
                               <th class="ps-0" scope="row">No.Hp :</th>
                               <td class="text-muted">+(1) 987 6543</td>
                             </tr>
@@ -116,19 +120,12 @@
                   <h5 class="card-title mb-3">Akun</h5>
                   <div class="row">
                     <div class="col-md-12 mb-3">
+                      <label for="email" class="form-label">Email: </label>
+                      <input type="search" id="email" name="email" class="form-control" readonly autocomplete="false">
+                    </div>
+                    <div class="col-md-12 mb-3">
                       <label for="username" class="form-label">Username: </label>
-                      <input type="search" id="username" name="username" class="form-control" autocomplete="false">
-                    </div>
-                    <div class="col-md-12 mb-3">
-                      <label for="password" class="form-label">Password: </label>
-                      <input type="password" id="password" name="password" class="form-control" autocomplete="false">
-                    </div>
-                    <div class="col-md-12 mb-3">
-                      <label for="confirmation_password" class="form-label">Konfirmasi Password: </label>
-                      <input type="password" id="confirmation_password" name="confirmation_password" class="form-control" autocomplete="false">
-                    </div>
-                    <div class="col-md-12">
-                      <button class="btn btn-success"><i class="bx bx-send"></i> Simpan</button>
+                      <input type="search" id="username" name="username" class="form-control" readonly autocomplete="false">
                     </div>
                   </div>
                 </div>

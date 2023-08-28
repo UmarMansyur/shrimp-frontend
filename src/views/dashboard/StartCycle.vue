@@ -2,7 +2,7 @@
   <button class="btn btn-outline-primary btn-sm me-2 mb-3" data-bs-target="#static-modal" data-bs-toggle="modal">
     <i class="ri-bubble-chart-fill align-middle"></i> Mulai Siklus
   </button>
-  <Modal modal="modal-lg" modal-id="static-modal" title="Mulai Siklus">
+  <Modal modal="modal-md" modal-id="static-modal" title="Mulai Siklus">
     <div class="row">
       <Pool></Pool>
       <div class="col-12 mb-3">
