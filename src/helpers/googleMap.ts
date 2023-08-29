@@ -16,32 +16,28 @@ export default function useGoogleApi() {
     lng: "",
   });
 
-  async function clickMap() {
+  async function clickMap(el: any) {
     await googleApi.load();
-    const { Map } = await google.maps.importLibrary("maps");
+
+    if(location.value.lat !== "" && location.value.lng !== "") {
+      const map = await setCenterMap(el, location.value);
+      await setMarker(location.value, map);
+      return;
+    }
 
     navigator.geolocation.getCurrentPosition(async (position) => {
-      const pos = {
+      location.value = {
         lat: position.coords.latitude,
-        lng: position.coords.longitude,
+        lng: position.coords.longitude
       };
-      location.value = pos;
-      const map = new Map(document.getElementById("map"), {
-        center: pos,
-        zoom: 15,
-        allowFullScreen: true,
-        fullscreenControl: true,
-        fullscreenControlOptions: {
-          position: google.maps.ControlPosition.RIGHT_BOTTOM,
-        },
-      });
-      await setMarker(pos, map);
+      const map = await setCenterMap(el, location.value);
+      await setMarker(location.value, map);
       if (isActiveClick.value) {
         google.maps.event.addListener(map, "click", async (event: any) => {
           location.value = {
             lat: event.latLng.lat(),
             lng: event.latLng.lng(),
-          }
+          };
           await setMarker(event.latLng, map);
         });
       }
@@ -56,6 +52,19 @@ export default function useGoogleApi() {
     googleApi.autoComplete = new Marker({
       position: location,
       map,
+    });
+  }
+
+  async function setCenterMap(el: any, position: any) {
+    const { Map } = await google.maps.importLibrary("maps");
+    return new Map(el, {
+      center: position,
+      zoom: 15,
+      allowFullScreen: true,
+      fullscreenControl: true,
+      fullscreenControlOptions: {
+        position: google.maps.ControlPosition.RIGHT_BOTTOM,
+      },
     });
   }
 

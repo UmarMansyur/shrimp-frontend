@@ -71,6 +71,30 @@ const togglePassword = () => {
 
 }
 
+function navActiveSelection(el: any, position: string, isNext?: boolean) {
+  const tabActive: any = document.querySelector(el);
+  const tabActivePosition = tabActive.getAttribute('data-position');
+  const tabPosition: any = isNext ? parseInt(tabActivePosition) + 1 : parseInt(tabActivePosition) - 1;
+  const tab: any = document.querySelector(position + `[data-position="${tabPosition}"]`);
+
+
+  tabActive.classList.remove('active', 'done');
+  tabActive.classList.add('done');
+  tabActive.setAttribute('aria-selected', 'false');
+  tabActive.setAttribute('tabindex', '-1');
+  tab.classList.add('active', 'show');
+  tab.setAttribute('aria-selected', 'true');
+  tab.setAttribute('tabindex', '0');
+}
+
+const next = () => {
+  navActiveSelection('button.nav-link.active', 'button', true);
+  navActiveSelection('.tab-pane.fade.active.show', '.tab-pane.fade', true);
+};
+const prev = () => {
+  navActiveSelection('button.nav-link.active', 'button', false);
+  navActiveSelection('.tab-pane.fade.active.show', '.tab-pane.fade', false);
+};
 
 export {
   isSm,
@@ -80,5 +104,8 @@ export {
   exitFullScreen,
   handleTheme,
   carousels,
-  togglePassword
+  togglePassword,
+  next,
+  prev,
+  navActiveSelection
 };

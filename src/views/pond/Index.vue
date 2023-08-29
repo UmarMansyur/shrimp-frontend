@@ -18,9 +18,21 @@
                 <div class="col-md-4 mb-2">
                   <div class="input-group">
                     <label class="mt-2 me-2" id="button-addon1">Cari:</label>
-                    <input type="text" class="form-control" name="search" id="search" v-model="query"
-                      placeholder="Masukkan kata kunci ..." @change="searching()">
-                    <button class="btn btn-primary" type="button" id="button-addon2" @click="searching()">
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="search"
+                      id="search"
+                      v-model="query"
+                      placeholder="Masukkan kata kunci ..."
+                      @change="searching()"
+                    />
+                    <button
+                      class="btn btn-primary"
+                      type="button"
+                      id="button-addon2"
+                      @click="searching()"
+                    >
                       <i class="bx bx-search"></i>
                     </button>
                   </div>
@@ -42,7 +54,12 @@
                       <tbody>
                         <tr v-if="result.length === 0" class="bg-light">
                           <td colspan="5" class="text-center">
-                            <img src="/assets/images/notfound.svg" alt="empty" class="img-fluid" width="500">
+                            <img
+                              src="/assets/images/notfound.svg"
+                              alt="empty"
+                              class="img-fluid"
+                              width="500"
+                            />
                           </td>
                         </tr>
                         <tr v-for="(item, index) in result" :key="index">
@@ -51,10 +68,16 @@
                           <td class="text-center">{{ item.pool_amount }}</td>
                           <td>{{ item.address }}</td>
                           <td class="text-center">
-                            <button class="btn btn-info btn-sm mx-2" @click="edit(item.id)">
+                            <RouterLink
+                              :to="`/pond/${encrypt(item.id)}`"
+                              class="btn btn-info btn-sm mx-2"
+                            >
                               <i class="bx bx-pencil"></i>
-                            </button>
-                            <button class="btn btn-danger btn-sm" @click="destroy(item.id)">
+                            </RouterLink>
+                            <button
+                              class="btn btn-danger btn-sm"
+                              @click="destroy(item.id)"
+                            >
                               <i class="bx bx-trash"></i>
                             </button>
                           </td>
@@ -65,34 +88,40 @@
                 </div>
               </div>
               <div class="row" v-if="result.length > 0">
-                <Pagination :current-page="currentPage" :is-first-page="isFirstPage" :is-last-page="isLastPage"
-                  :go-to="goToPage" :next-page="nextPage" :page-list="pageList" :total-page="totalPage"
-                  :prev-page="prevPage" :total-data="totalData">
+                <Pagination
+                  :current-page="currentPage"
+                  :is-first-page="isFirstPage"
+                  :is-last-page="isLastPage"
+                  :go-to="goToPage"
+                  :next-page="nextPage"
+                  :page-list="pageList"
+                  :total-page="totalPage"
+                  :prev-page="prevPage"
+                  :total-data="totalData"
+                >
                 </Pagination>
               </div>
             </div>
           </div>
         </div>
       </div>
-
     </template>
   </Parent>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-import Pagination from '../../components/Pagination.vue';
-import usePagination from '../../composables/pagination';
-import Parent from '../Parent.vue';
-import useSkeleton from '../../helpers/skeleton';
-import TableSkeleton from '../../components/TableSkeleton.vue';
-import Limit from '../../components/Limit.vue';
-import Sweet from '../../helpers/sweetalert2';
-import useApi from '../../composables/api';
-import _default from '@vuepic/vue-datepicker';
-import router from '../../router';
+import { onMounted, ref } from "vue";
+import Pagination from "../../components/Pagination.vue";
+import usePagination from "../../composables/pagination";
+import Parent from "../Parent.vue";
+import useSkeleton from "../../helpers/skeleton";
+import TableSkeleton from "../../components/TableSkeleton.vue";
+import Limit from "../../components/Limit.vue";
+import Sweet from "../../helpers/sweetalert2";
+import useApi from "../../composables/api";
+import { encrypt } from "../../helpers/crypto";
 const { loader, hideLoader, showLoader } = useSkeleton();
-const query = ref<string>('');
+const query = ref<string>("");
 const {
   result,
   currentPage,
@@ -129,18 +158,14 @@ const searching = async () => {
 
 const { deleteResource } = useApi();
 const destroy = async (id: string) => {
-  Sweet.confirm('Apakah anda yakin ingin menghapus data ini ?', async () => {
+  Sweet.confirm("Apakah anda yakin ingin menghapus data ini ?", async () => {
     showLoader();
-    const response = await deleteResource('/pond/' + id);
-    if(response) {
-      Sweet.success('Berhasil menghapus data');
+    const response = await deleteResource("/pond/" + id);
+    if (response) {
+      Sweet.success("Berhasil menghapus data");
     }
     await fetchData();
     hideLoader();
   });
-};
-
-const edit = (id: string) => {
-  router.push({ name: 'Edit Tambak', params: { id } });
 };
 </script>

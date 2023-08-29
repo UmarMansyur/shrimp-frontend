@@ -1,19 +1,21 @@
 <template>
-  <div class="map-google card-body" id="map" style="width: 100%; height: 300px;"></div>
+  <div>
+    <div class="map-google card-body" id="map" style="width: 100%; height: 300px"></div>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, watch } from 'vue';
-import useGoogleApi from '../helpers/googleMap';
+import { onMounted, watch } from "vue";
+import useGoogleApi from "../helpers/googleMap";
 const { clickMap, location } = useGoogleApi();
-const emit = defineEmits(['location']);
-
+const emit = defineEmits(["location"]);
 
 onMounted(async () => {
-  await clickMap();
+  const element = document.getElementById("map");
+  await clickMap(element);
 });
 
 watch(location, (value) => {
-  emit('location', value);
+  emit("location", value);
 });
 </script>

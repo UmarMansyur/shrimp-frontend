@@ -46,24 +46,25 @@
                         </div>
                         <div class="col-lg-12">
                           <div class="mb-3">
-                            <Select id="provinsi" label="Provinsi" :options="province" @selected="getProvince"></Select>
+                            <Select id="provinsi" label="Provinsi" :options="province" @selected="getProvince"
+                              :selected-default="provinsiDefault"></Select>
                           </div>
                         </div>
                         <div class="col-lg-12">
                           <div class="mb-3">
-                            <Select id="kabupaten" label="Kabupaten" :options="districts"
+                            <Select id="kabupaten" label="Kabupaten" :options="districts" :selected-default="kabupatenDefault"
                               @selected="getDistricts"></Select>
                           </div>
                         </div>
                         <div class="col-lg-12">
                           <div class="mb-3">
-                            <Select id="kecamatan" label="kecamatan" :options="subDistricts"
+                            <Select id="kecamatan" label="kecamatan" :options="subDistricts" :selected-default="kecamatanDefault"
                               @selected="getSubDistricts"></Select>
                           </div>
                         </div>
                         <div class="col-lg-12">
                           <div class="mb-3">
-                            <Select id="kelurahan" label="Kelurahan" :options="villages" @selected="getVillages"></Select>
+                            <Select id="kelurahan" label="Kelurahan" :options="villages" @selected="getVillages" :selected-default="kelurahanDefault"></Select>
                           </div>
                         </div>
                       </div>
@@ -164,6 +165,8 @@ import useApi from "../../composables/api";
 import Notify from "../../helpers/notify";
 import { next, prev } from "../../helpers/handleEvent";
 import Sweet from "../../helpers/sweetalert2";
+import { decrypt } from "../../helpers/crypto";
+import { useRoute } from "vue-router";
 
 const { hideLoader, loader, showLoader } = useSkeleton();
 const location = ref<any>({});
@@ -227,11 +230,51 @@ const loadLocation = async (endpoint: string) => {
   });
 };
 
+const { params } = useRoute();
+const provinsiDefault = ref<any>(null);
+const kabupatenDefault = ref<any>(null);
+const kecamatanDefault = ref<any>(null);
+const kelurahanDefault = ref<any>(null);
+
 onMounted(async () => {
   await showLoader();
-  province.value = await loadLocation("/province");
+  if (params.id) {
+    const id = decrypt(params.id.toString());
+    province.value = await loadLocation("/province");
+    const { data } = await getResource("/pond/" + id);
+
+
+    const getProvince = await setDefault(province.value, data.province);
+    provinsiDefault.value = getProvince.value;
+    provinsi.value = getProvince.label;
+    
+    districts.value = await loadLocation('/district/'+JSON.parse(getProvince.value).id);
+    const getKabupaten = await setDefault(districts.value, data.regency);
+    kabupatenDefault.value = getKabupaten.value;
+    kabupaten.value = getKabupaten.label;
+
+
+    subDistricts.value = await loadLocation('/subdistrict/'+JSON.parse(getKabupaten.value).id);
+    const getKecamatan = await setDefault(subDistricts.value, data.subdistrict);
+    kecamatanDefault.value = getKecamatan.value;
+    kecamatan.value = getKecamatan.label;
+
+    villages.value = await loadLocation('/villages/'+JSON.parse(getKecamatan.value).id);
+    const getKelurahan = await setDefault(villages.value, data.village);
+    kelurahanDefault.value = getKelurahan.value;
+    kelurahan.value = getKelurahan.label;
+
+    pond_name.value = data.name;
+    address.value = data.address;
+    pond_amount.value = data.pool_amount;
+    wide.value = data.wide;
+  }
   await hideLoader();
 });
+
+const setDefault = async (model: any, value: any) => {
+  return model.find((item: any) => item.label == value);
+};
 
 const districts = ref<any>([]);
 const getProvince = async (value: any) => {

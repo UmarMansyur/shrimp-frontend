@@ -34,7 +34,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: 'Edit Tambak'
     },
-    component: () => import("../views/pond/Add.vue"),
+    component: () => import("../views/pond/Edit.vue"),
   },
   {
     path: "/pool",

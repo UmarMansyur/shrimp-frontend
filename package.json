@@ -12,6 +12,7 @@
     "@googlemaps/js-api-loader": "^1.16.2",
     "@vuepic/vue-datepicker": "^6.0.1",
     "axios": "^1.4.0",
+    "crypto-js": "^4.1.1",
     "pinia": "^2.1.6",
     "v-select2-component": "^0.4.7",
     "vee-validate": "^4.11.3",
@@ -24,6 +25,7 @@
     "yup": "^1.2.0"
   },
   "devDependencies": {
+    "@types/crypto-js": "^4.1.1",
     "@types/vue-select": "^3.16.2",
     "@vitejs/plugin-vue": "^4.2.3",
     "typescript": "^5.0.2",
