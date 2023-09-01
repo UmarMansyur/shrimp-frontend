@@ -58,7 +58,15 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: 'Edit Kolam'
     },
-    component: () => import("../views/pool/Add.vue"),
+    component: () => import("../views/pool/Edit.vue"),
+  },
+  {
+    path: "/pool/detail/:id",
+    name: 'Detail Kolam',
+    meta: {
+      title: 'Detail Kolam'
+    },
+    component: () => import("../views/pool/Detail.vue"),
   },
   {
     path: "/monitoring",

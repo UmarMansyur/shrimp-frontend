@@ -96,7 +96,7 @@
                         <div class="col-md-6 mb-3">
                           <label class="form-label" for="pond_amount">Jumlah Kolam:
                           </label>
-                          <input type="number" class="form-control" id="pond_amount" placeholder="Jumlah Kolam"
+                          <input type="number" class="form-control" id="pond_amount" placeholder="Jumlah Kolam" min="1"
                             v-model="pond_amount" />
                         </div>
                       </div>
@@ -164,6 +164,7 @@ import useApi from "../../composables/api";
 import Notify from "../../helpers/notify";
 import { next, prev } from "../../helpers/handleEvent";
 import Sweet from "../../helpers/sweetalert2";
+import router from "../../router";
 
 const { hideLoader, loader, showLoader } = useSkeleton();
 const location = ref<any>({});
@@ -273,13 +274,23 @@ const save = async () => {
     showLoader();
     const response = await postResource("/pond", data);
     if (response) {
-      Notify.success("Berhasil menambahkan tambak");
+      await addPool(response.data.id, pond_amount.value);
+      Notify.success("Data berhasil disimpan");
     }
+    router.push('/pond');
     clearData();
     hideLoader();
   });
 };
 
+async function addPool(id: string, limit: number) {
+  for(let a = 0; a < limit; a++) {
+      await postResource("/pool/create", {
+        pond_id: id,
+        name: "Kolam " + (a + 1),
+      });
+    }
+}
 function clearData() {
   pond_amount.value = 0;
   wide.value = 0;

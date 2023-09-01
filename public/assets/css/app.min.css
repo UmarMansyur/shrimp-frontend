@@ -383,12 +383,13 @@
 .footer {
   bottom: 0;
   padding: 20px calc(1.5rem * 0.5);
-  position: absolute;
+  position: fixed;
   right: 0;
   color: var(--vz-footer-color);
   left: var(--vz-vertical-menu-width);
   height: 60px;
   background-color: var(--vz-footer-bg);
+  z-index: 1000;
 }
 @media (max-width: 991.98px) {
   .footer {

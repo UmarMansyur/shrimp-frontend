@@ -8,7 +8,7 @@ const googleApi: any = new Loader({
   libraries: ["places"],
 });
 
-export default function useGoogleApi() {
+export default function useGoogleApi(defaultLocation?: any) {
 
   const isActiveClick = ref<Boolean>(true);
   const location = ref<any>({
@@ -16,10 +16,21 @@ export default function useGoogleApi() {
     lng: "",
   });
 
-  async function clickMap(el: any) {
+  async function clickMap(el: any, latitude?: any, longitude?: any) {
     await googleApi.load();
-
-    if(location.value.lat !== "" && location.value.lng !== "") {
+    if (defaultLocation && defaultLocation.lat) location.value = defaultLocation;
+    if (latitude && longitude) {
+      const map = await setCenterMap(el, {
+        lat: latitude,
+        lng: longitude,
+      });
+      await updateMarker(map, {
+        lat: latitude,
+        lng: longitude,
+      });
+      return;
+    }
+    if (location.value.lat !== "" && location.value.lng !== "") {
       const map = await setCenterMap(el, location.value);
       await setMarker(location.value, map);
       return;
@@ -44,15 +55,28 @@ export default function useGoogleApi() {
     });
   }
 
+
+  let markerInstance: any = null;
+
+  async function updateMarker(map: any, location: any) {
+    if (markerInstance) {
+      markerInstance.setMap(null);
+    }
+
+    markerInstance = new google.maps.Marker({
+      position: location,
+      map: map,
+    });
+  }
+
   async function setMarker(location: any, map: any) {
     const { Marker } = await google.maps.importLibrary("marker");
-    if (googleApi.autoComplete) {
-      googleApi.autoComplete.setMap(null);
-    }
-    googleApi.autoComplete = new Marker({
+    if (markerInstance) markerInstance.setMap(null);
+    const marker = new Marker({
       position: location,
-      map,
+      map: map,
     });
+    markerInstance = marker;
   }
 
   async function setCenterMap(el: any, position: any) {

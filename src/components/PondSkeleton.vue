@@ -24,7 +24,7 @@
             <div class="col-md-3 col-6 py-2 rounded placeholder mx-3">
             </div>
             <div class="col-6 col-md-9"></div>
-            <div class="col-8 col-md-11 placeholder rounded mt-2 mx-3" style="padding: 150px;">
+            <div class="col-8 col-md-11 placeholder rounded mt-2 mx-3">
             </div>
             <div class="col-md-1 col-4"></div>
           </div>

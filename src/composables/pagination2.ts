@@ -3,7 +3,7 @@ import useApi from "./api";
 
 const { getResource } = useApi();
 
-export default function usePagination(path: string, q?:any ,query?: any) {
+export default function usePagination(path: any, q?:any ,query?: any) {
   const totalPage = ref<number>(0);
   const currentPage = ref<number>(1);
   const result:any = ref<any[]>([]);
@@ -65,10 +65,11 @@ export default function usePagination(path: string, q?:any ,query?: any) {
   async function fetchData() {
     let query = [];
     if(q.value){
-      query.push(`${path}${q.value}&page=${currentPage.value}&limit=${limitPage.value}`);
+      query.push(`${path.value}${q.value}&page=${currentPage.value}&limit=${limitPage.value}`);
     } else {
-      query.push(`${path}?page=${currentPage.value}&limit=${limitPage.value}`);
+      query.push(`${path.value}?page=${currentPage.value}&limit=${limitPage.value}`);
     }
+    console.log(query);
     const response = await getResource(query[0]);
     result.value = response.data;
     totalPage.value = response.total_page;
@@ -82,9 +83,9 @@ export default function usePagination(path: string, q?:any ,query?: any) {
   async function search() {
     let search = [];
     if(q != ''){
-      search.push(`${path}${q.value}&page=${currentPage.value}&limit=${limitPage.value}&search=${query.value}`);
+      search.push(`${path.value}${q.value}&page=${currentPage.value}&limit=${limitPage.value}&search=${query.value}`);
     } else {
-      search.push(`${path}?page=${currentPage.value}&limit=${limitPage.value}&search=${query.value}`);
+      search.push(`${path.value}?page=${currentPage.value}&limit=${limitPage.value}&search=${query.value}`);
     }
     const response = await getResource(search[0]);
     result.value = response.data.data;

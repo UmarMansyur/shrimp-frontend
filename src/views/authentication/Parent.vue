@@ -225,7 +225,6 @@ const tryLogin = async () => {
       email: email.value,
       password: password.value,
     });
-    console.log(response);
     if (response) {
       setToken(response.data.data.token_access);
       router.replace("/");

@@ -2,8 +2,7 @@
   <Parent>
     <div class="row">
       <div class="col-md-2 mb-3">
-        <select name="ponds" id="ponds" class="form-select">
-          <option value="1" selected>Tambak 1</option>
+        <select name="pond" id="pond" class="form-select" v-model="pondSelection">
         </select>
       </div>
       <div class="col-md-4"></div>
@@ -11,7 +10,9 @@
         <RouterLink to="/pool/create" class="btn btn-outline-primary">Tambah Kolam</RouterLink>
       </div>
       <div class="col-12">
-        <PoolMap></PoolMap>
+        <div class="row">
+          <PoolMap :pond-id="(pondSelection).toString()"></PoolMap>
+        </div>
       </div>
     </div>
   </Parent>
@@ -20,4 +21,35 @@
 <script setup lang="ts">
 import PoolMap from '../../components/poolMap.vue';
 import Parent from '../Parent.vue';
+import Select from '../../components/Select.vue';
+import useApi from '../../composables/api';
+import { onMounted, ref } from 'vue';
+declare const Choices: any;
+
+const { getResource } = useApi();
+
+onMounted(async ()=> {
+  await loadTambak();
+})
+
+const pondSelection = ref<string>('');
+const loadTambak = async () => {
+  const response = await getResource('/pond/list/me');
+  if(response) {
+    const select = new Choices('#pond', {
+      choices: response.data.map((item: any) => {
+        return {
+          value: item.id,
+          label: item.name,
+        }
+      }),
+      searchEnabled: false,
+      shouldSort: false,
+      allowHTML: true,
+      itemSelectText: '',
+    });
+    select.setChoiceByValue(response.data[0].id);
+    pondSelection.value = response.data[0].id;
+  }
+};
 </script>

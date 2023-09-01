@@ -2,8 +2,7 @@
   <div class="page-title-box">
     <div class="row justify-content-between align-items-center mt-3">
       <div class="col-md-3 col-6">
-        <select name="ponds" id="ponds" class="form-select">
-          <option value="1" selected>Tambak 1</option>
+        <select name="pond" id="pond" class="form-select" v-model="pondSelection">
         </select>
       </div>
       <div class="col-md-6 d-none d-md-block"></div>
@@ -26,22 +25,65 @@
 
     <div class="row mt-3">
       <div class="col-md-12 align-items-center">
-        <StartSycle/>
-        <Feed/>
-        <Anco/>
-        <Water/>
-        <Kimia/>
+        <StartSycle />
+        <Feed />
+        <Anco />
+        <Water />
+        <Kimia />
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import StartSycle from './StartCycle.vue';
 import Feed from './Feed.vue';
 import Water from './Water.vue';
 import Anco from './Anco.vue';
 import Kimia from './Kimia.vue';
+import useApi from '../../composables/api';
+import { usePond } from '../../stores/pond';
+import Sweet from '../../helpers/sweetalert2';
+import router from '../../router';
 const month = ref(new Date());
+declare const Choices: any;
+
+
+const { getResource } = useApi();
+onMounted(async () => {
+  await loadTambak();
+});
+
+const pondSelection = ref<string>('');
+const loadTambak = async () => {
+  const response = await getResource('/pond/list/me');
+  if (response) {
+    if(response.data.length === 0) {
+      Sweet.error('Anda belum memiliki tambak. Tambahkan terlebih dahulu', ()=> {
+        router.push('/pond/create');
+      });
+      return;
+    }
+    const select = new Choices('#pond', {
+      choices: response.data.map((item: any) => {
+        return {
+          value: item.id,
+          label: item.name,
+        };
+      }),
+      searchEnabled: true,
+      shouldSort: false,
+      allowHTML: true,
+      itemSelectText: '',
+    });
+    select.setChoiceByValue(response.data[0].id);
+    pondSelection.value = response.data[0].id;
+    return;
+  }
+};
+const { setPondId } = usePond();
+watch(pondSelection, async () => {
+  setPondId(Number(pondSelection.value));
+});
 </script>

@@ -3,30 +3,32 @@
     <Parent>
       <div class="row mb-3">
         <div class="col-12">
-          <button class="btn btn-primary" @click="$router.go(-1)"><i class="bx bx-arrow-back"></i></button>
+          <RouterLink to="/pool" class="btn btn-primary"><i class="bx bx-arrow-back"></i></RouterLink>
         </div>
       </div>
       <div class="row justify-content-center">
         <div class="col-md-10">
           <div class="card">
             <div class="card-header align-items-center d-flex">
-              <h4 class="card-title mb-0 flex-grow-1">Tambah Kolam</h4>
+              <h4 class="card-title mb-0 flex-grow-1">Edit Kolam</h4>
               <div class="flex-shrink-0">
                 <div class="form-check form-switch form-switch-right form-switch-md">
-                  <input class="form-check-input code-switcher" type="checkbox" id="shape" @click="isSircle()">
+                  <input class="form-check-input code-switcher" type="checkbox" id="shape" @click="isSircle()" :checked="circle">
                   <label for="shape" class="form-label text-muted">Lingkaran</label>
                 </div>
               </div>
             </div>
             <div class="card-body p-4">
               <form action="">
-                <Select label="Tambak" id="pond" :options="ponds" @selected="getSelection" :class="pond_id_err ? 'is-invalid' : ''"></Select>
+                <Select label="Tambak" id="pond" :options="ponds" @selected="getSelection"
+                :selected-default="pond_id_default"
+                  :class="pond_id_err ? 'is-invalid' : ''"></Select>
                 <div class="row">
                   <div class="col-12 mb-3">
                     <label for="pool_name" class="form-label">Nama Kolam: </label>
                     <input type="text" name="pool_name" id="pool_name" class="form-control" placeholder="Nama Kolam"
                       :class="{ 'is-invalid': pool_name_err.dirty && !pool_name_err.valid }" v-model="pool_name">
-  
+
                   </div>
                   <div class="col-12 mb-3">
                     <label for="pool_address" class="form-label">Lokasi: </label>
@@ -37,14 +39,22 @@
                   <div class="col-12 mb-3">
                     <label for="address" class="form-label">Deskripsi Alamat: </label>
                     <textarea name="address" id="address" class="form-control" placeholder="Deskripsi Alamat"
-                      :class="{ 'is-invalid': pool_address_err.dirty && !pool_address_err.valid }"
-                      v-model="pool_address" rows="5"></textarea>
+                      :class="{ 'is-invalid': pool_address_err.dirty && !pool_address_err.valid }" v-model="pool_address"
+                      rows="5"></textarea>
                   </div>
                   <div v-if="!circle" class="col-12">
-                    <SquareWide @value="getValue" ></SquareWide>
+                    <SquareWide @value="getValue" :default-value="{
+                      pool_wide: pool_wide,
+                      pool_length: pool_height,
+                      pool_width: pool_width,
+                    }"></SquareWide>
                   </div>
                   <div class="col-12" v-else>
-                    <CircleWide @value="getCircleValue" ></CircleWide>
+                    <CircleWide @value="getCircleValue" :default-value="{
+                      pool_wide: pool_wide,
+                      pool_length: pool_height,
+                      pool_depth: pool_width,
+                    }"></CircleWide>
                   </div>
                   <div class="col-12 mb-3">
                     <label for="anco" class="form-label">Jumlah Anco: </label>
@@ -52,7 +62,8 @@
                       :class="{ 'is-invalid': anco_err.dirty && !anco_err.valid }">
                   </div>
                   <div class="col-md-12 mt-3 text-center">
-                    <button id="save-button" class="btn btn-success" type="button" @click="save()" :disabled="!meta.valid"><i class="bx bx-send"></i> Simpan
+                    <button id="save-button" class="btn btn-success" type="button" @click="save()"
+                      :disabled="!meta.valid"><i class="bx bx-send"></i> Simpan
                       Kolam</button>
                   </div>
                 </div>
@@ -86,8 +97,10 @@ import router from '../../router';
 import useSkeleton from '../../helpers/skeleton';
 import PondSkeleton from '../../components/PondSkeleton.vue';
 import Notify from '../../helpers/notify';
+import { decrypt } from '../../helpers/crypto';
+import { useRoute } from 'vue-router';
 const { hideLoader, loader, showLoader } = useSkeleton();
-const { getResource, postResource } = useApi();
+const { getResource, putResource } = useApi();
 
 const circle = ref<any>(false);
 const isSircle = () => {
@@ -169,13 +182,39 @@ const loadPonds = async () => {
     Sweet.error('Anda belum memiliki tambak, silahkan tambahkan tambak terlebih dahulu', () => {
       router.replace('/pond/create');
     });
-
   }
 };
+
+
+const route = useRoute();
+const pond_id_default = ref<string>('');
+const id = ref<string>('');
+const loadPool = async () => {
+  const response = await getResource('/pool/' + id.value);
+  if (response) {
+    pond_id.value = response.pond_id;
+    pond_id_default.value = response.pond_id;
+    pool_name.value = response.name;
+    pool_address.value = response.address;
+    pool_wide.value = response.wide;
+    pool_height.value = response.height;
+    pool_width.value = response.width;
+    anco.value = response.anco_amount;
+    latitude.value = response.lat;
+    longitude.value = response.long;
+    is_circle.value = response.is_circle;
+    circle.value = response.is_circle;
+    
+  }
+
+};
+
 
 onMounted(async () => {
   await showLoader();
   await loadPonds();
+  id.value = decrypt((route.params.id).toString());
+  await loadPool();
   await hideLoader();
 });
 
@@ -187,31 +226,18 @@ async function save() {
     wide: pool_wide.value,
     height: pool_height.value,
     width: pool_width.value,
-    anco_amount: Number(anco.value),
+    anco_amount: anco.value,
     lat: latitude.value,
     long: longitude.value,
     is_circle: is_circle.value,
   };
   showLoader();
-  const response = await postResource('/pool', data);
+  const response = await putResource('/pool/' + id.value, data);
   if (response) {
-    Notify.success('Berhasil menambahkan kolam');
-    clear();
+    Notify.success('Berhasil merubah data kolam');
+    router.replace('/pool/detail/' + route.params.id);
   }
   hideLoader();
-}
-
-function clear() {
-  pond_id.value = '';
-  pool_name.value = '';
-  pool_address.value = '';
-  pool_wide.value = 0
-  pool_height.value = 0;
-  pool_width.value = 0;
-  anco.value = 0;
-  latitude.value = 0;
-  longitude.value = 0;
-  is_circle.value = false;
 }
 
 </script>

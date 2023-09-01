@@ -8,100 +8,103 @@
               <h4 class="card-title mb-0">Form Tambah Tambak</h4>
             </div>
             <div class="card-body">
-              <form action="#" class="form-steps" autocomplete="off">
-                <div class="step-arrow-nav mb-4">
-                  <ul class="nav nav-pills custom-nav nav-justified" role="tablist">
-                    <li class="nav-item" role="presentation">
-                      <button class="nav-link active" id="steparrow-gen-info-tab" type="button" role="tab"
-                        aria-controls="steparrow-gen-info" aria-selected="true" data-position="0">
-                        Langkah 1
-                      </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                      <button class="nav-link" id="steparrow-description-info-tab" type="button" role="tab"
-                        aria-controls="steparrow-description-info" aria-selected="false" data-position="1" tabindex="-1">
-                        Langkah 2
-                      </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                      <button class="nav-link" id="pills-experience-tab" type="button" role="tab"
-                        aria-controls="pills-experience" aria-selected="false" data-position="2" tabindex="-1">
-                        Konfirmasi
-                      </button>
-                    </li>
-                  </ul>
-                </div>
+              <div class="step-arrow-nav mb-4">
+                <ul class="nav nav-pills custom-nav nav-justified" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="steparrow-gen-info-tab" type="button" role="tab"
+                      aria-controls="steparrow-gen-info" aria-selected="true" data-position="0">
+                      Langkah 1
+                    </button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="steparrow-description-info-tab" type="button" role="tab"
+                      aria-controls="steparrow-description-info" aria-selected="false" data-position="1" tabindex="-1">
+                      Langkah 2
+                    </button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-experience-tab" type="button" role="tab"
+                      aria-controls="pills-experience" aria-selected="false" data-position="2" tabindex="-1">
+                      Konfirmasi
+                    </button>
+                  </li>
+                </ul>
+              </div>
 
-                <div class="tab-content">
-                  <div class="tab-pane fade active show" data-position="0" id="steparrow-gen-info" role="tabpanel"
-                    aria-labelledby="steparrow-gen-info-tab">
-                    <div>
-                      <div class="row">
-                        <div class="col-lg-12">
-                          <div class="mb-3">
-                            <label class="form-label" for="pond_name">Nama Tambak</label>
-                            <input type="text" class="form-control" id="pond_name" placeholder="Nama Tambak"
-                              v-model="pond_name" />
-                          </div>
-                        </div>
-                        <div class="col-lg-12">
-                          <div class="mb-3">
-                            <Select id="provinsi" label="Provinsi" :options="province" @selected="getProvince"
-                              :selected-default="provinsiDefault"></Select>
-                          </div>
-                        </div>
-                        <div class="col-lg-12">
-                          <div class="mb-3">
-                            <Select id="kabupaten" label="Kabupaten" :options="districts" :selected-default="kabupatenDefault"
-                              @selected="getDistricts"></Select>
-                          </div>
-                        </div>
-                        <div class="col-lg-12">
-                          <div class="mb-3">
-                            <Select id="kecamatan" label="kecamatan" :options="subDistricts" :selected-default="kecamatanDefault"
-                              @selected="getSubDistricts"></Select>
-                          </div>
-                        </div>
-                        <div class="col-lg-12">
-                          <div class="mb-3">
-                            <Select id="kelurahan" label="Kelurahan" :options="villages" @selected="getVillages" :selected-default="kelurahanDefault"></Select>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="d-flex align-items-start gap-3 mt-4">
-                      <button type="button" class="btn btn-success btn-label right ms-auto nexttab nexttab"
-                        data-nexttab="steparrow-description-info-tab" @click="next()" :disabled="!meta.valid">
-                        <i class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>Selanjutnya
-                      </button>
+              <div class="tab-content">
+                <div class="tab-pane fade active show" data-position="0" id="steparrow-gen-info" role="tabpanel"
+                  aria-labelledby="steparrow-gen-info-tab">
+                  <div class="row mb-3">
+                    <div class="col-12">
+                      <label class="form-label" for="pond_name">Nama Tambak</label>
+                      <input type="text" class="form-control" id="pond_name" placeholder="Nama Tambak"
+                        v-model="pond_name" />
                     </div>
                   </div>
-
-                  <div class="tab-pane fade" data-position="1" id="steparrow-description-info" role="tabpanel"
-                    aria-labelledby="steparrow-description-info-tab">
-                    <div>
-                      <div class="row">
-                        <div class="col-lg-12 mb-3">
-                          <span>Alamat</span>
-                          <Map @location="getLocation"></Map>
-                        </div>
-                        <div class="col-lg-12 mb-3">
-                          <label class="form-label" for="address">Alamat Lengkap: </label>
-                          <textarea v-model="address" class="form-control" cols="10" rows="5" id="address"
-                            autocomplete="false"></textarea>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                          <label class="form-label" for="wide">Luas: </label>
-                          <input type="number" class="form-control" id="wide" placeholder="Luas" v-model="wide" />
-                        </div>
-                        <div class="col-md-6 mb-3">
-                          <label class="form-label" for="pond_amount">Jumlah Kolam:
-                          </label>
-                          <input type="number" class="form-control" id="pond_amount" placeholder="Jumlah Kolam"
-                            v-model="pond_amount" />
-                        </div>
+                  <Select id="provinsi" label="Provinsi" :options="province" @selected="getProvince"
+                    :selected-default="provinsiDefault"></Select>
+                  <Select id="kabupaten" label="Kabupaten" :options="districts" :selected-default="kabupatenDefault"
+                    @selected="getDistricts"></Select>
+                  <Select id="kecamatan" label="Kecamatan" :options="subDistricts" :selected-default="kecamatanDefault"
+                    @selected="getSubDistricts"></Select>
+                  <Select id="kelurahan" label="Kelurahan" :options="villages" @selected="getVillages"
+                    :selected-default="kelurahanDefault"></Select>
+                  <div class="">
+                    <button type="button" class="btn btn-success btn-label right ms-auto nexttab nexttab"
+                      data-nexttab="steparrow-description-info-tab" @click="next()" :disabled="!meta.valid">
+                      <i class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>Selanjutnya
+                    </button>
+                  </div>
+                </div>
+                <div class="tab-pane fade" data-position="1" id="steparrow-description-info" role="tabpanel"
+                  aria-labelledby="steparrow-description-info-tab">
+                  <div>
+                    <div class="row">
+                      <div class="col-lg-12 mb-3">
+                        <span>Alamat</span>
+                        <Map @location="getLocation" :set-location="loc"></Map>
+                      </div>
+                      <div class="col-lg-12 mb-3">
+                        <label class="form-label" for="address">Alamat Lengkap: </label>
+                        <textarea v-model="address" class="form-control" cols="10" rows="5" id="address"
+                          autocomplete="false"></textarea>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label" for="wide">Luas: </label>
+                        <input type="number" class="form-control" id="wide" placeholder="Luas" v-model="wide" />
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label" for="pond_amount">Jumlah Kolam:
+                        </label>
+                        <input type="number" class="form-control" id="pond_amount" placeholder="Jumlah Kolam" readonly
+                          v-model="pond_amount" />
                       </div>
                     </div>
+                  </div>
+                  <div class="d-flex align-items-start gap-3 mt-4">
+                    <button type="button" class="btn btn-light btn-label previestab"
+                      data-previous="steparrow-gen-info-tab" @click="prev()">
+                      <i class="ri-arrow-left-line label-icon align-middle fs-16 me-2"></i>
+                      Sebelumnya
+                    </button>
+                    <button type="button" class="btn btn-success btn-label right ms-auto nexttab nexttab"
+                      data-nexttab="pills-experience-tab" @click="next()" v-if="!disabledButton">
+                      <i class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>Berikutnya
+                    </button>
+                  </div>
+                </div>
+
+                <div class="tab-pane fade" data-position="2" id="pills-experience" role="tabpanel"
+                  aria-labelledby="pills-experience-tab">
+                  <div class="text-center">
+                    <h5>Konfirmasi</h5>
+                    <img src="/assets/images/convert.svg" alt="" class="img-fluid" width="200" />
+                    <p class="mt-3">
+                      Pastikan data yang anda inputkan sudah benar, Jika terdapat
+                      kesalahan silahkan klik tombol kembali dan ulangi kembali.
+                    </p>
+                  </div>
+                  <div class="mt-4">
                     <div class="d-flex align-items-start gap-3 mt-4">
                       <button type="button" class="btn btn-light btn-label previestab"
                         data-previous="steparrow-gen-info-tab" @click="prev()">
@@ -109,40 +112,17 @@
                         Sebelumnya
                       </button>
                       <button type="button" class="btn btn-success btn-label right ms-auto nexttab nexttab"
-                        data-nexttab="pills-experience-tab" @click="next()" v-if="!disabledButton">
-                        <i class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>Berikutnya
+                        data-nexttab="pills-experience-tab" @click="save()">
+                        <i class="bx bx-save label-icon align-middle fs-16 ms-2"></i>Simpan
                       </button>
                     </div>
                   </div>
-
-                  <div class="tab-pane fade" data-position="2" id="pills-experience" role="tabpanel"
-                    aria-labelledby="pills-experience-tab">
-                    <div class="text-center">
-                      <h5>Konfirmasi</h5>
-                      <img src="/assets/images/convert.svg" alt="" class="img-fluid" width="200" />
-                      <p class="mt-3">
-                        Pastikan data yang anda inputkan sudah benar, Jika terdapat
-                        kesalahan silahkan klik tombol kembali dan ulangi kembali.
-                      </p>
-                    </div>
-                    <div class="mt-4">
-                      <div class="d-flex align-items-start gap-3 mt-4">
-                        <button type="button" class="btn btn-light btn-label previestab"
-                          data-previous="steparrow-gen-info-tab" @click="prev()">
-                          <i class="ri-arrow-left-line label-icon align-middle fs-16 me-2"></i>
-                          Sebelumnya
-                        </button>
-                        <button type="button" class="btn btn-success btn-label right ms-auto nexttab nexttab"
-                          data-nexttab="pills-experience-tab" @click="save()">
-                          <i class="bx bx-save label-icon align-middle fs-16 ms-2"></i>Simpan
-                        </button>
-                      </div>
-                    </div>
-                  </div>
                 </div>
-              </form>
+              </div>
             </div>
+
           </div>
+
         </div>
       </div>
     </template>
@@ -167,6 +147,7 @@ import { next, prev } from "../../helpers/handleEvent";
 import Sweet from "../../helpers/sweetalert2";
 import { decrypt } from "../../helpers/crypto";
 import { useRoute } from "vue-router";
+
 
 const { hideLoader, loader, showLoader } = useSkeleton();
 const location = ref<any>({});
@@ -235,31 +216,32 @@ const provinsiDefault = ref<any>(null);
 const kabupatenDefault = ref<any>(null);
 const kecamatanDefault = ref<any>(null);
 const kelurahanDefault = ref<any>(null);
-
+const loc = ref<any>({});
+const id = ref<string>("");
 onMounted(async () => {
   await showLoader();
   if (params.id) {
-    const id = decrypt(params.id.toString());
+    id.value = decrypt(params.id.toString());
     province.value = await loadLocation("/province");
-    const { data } = await getResource("/pond/" + id);
+    const { data } = await getResource("/pond/" + id.value);
 
 
     const getProvince = await setDefault(province.value, data.province);
     provinsiDefault.value = getProvince.value;
     provinsi.value = getProvince.label;
-    
-    districts.value = await loadLocation('/district/'+JSON.parse(getProvince.value).id);
+
+    districts.value = await loadLocation('/district/' + JSON.parse(getProvince.value).id);
     const getKabupaten = await setDefault(districts.value, data.regency);
     kabupatenDefault.value = getKabupaten.value;
     kabupaten.value = getKabupaten.label;
 
 
-    subDistricts.value = await loadLocation('/subdistrict/'+JSON.parse(getKabupaten.value).id);
+    subDistricts.value = await loadLocation('/subdistrict/' + JSON.parse(getKabupaten.value).id);
     const getKecamatan = await setDefault(subDistricts.value, data.subdistrict);
     kecamatanDefault.value = getKecamatan.value;
     kecamatan.value = getKecamatan.label;
 
-    villages.value = await loadLocation('/villages/'+JSON.parse(getKecamatan.value).id);
+    villages.value = await loadLocation('/villages/' + JSON.parse(getKecamatan.value).id);
     const getKelurahan = await setDefault(villages.value, data.village);
     kelurahanDefault.value = getKelurahan.value;
     kelurahan.value = getKelurahan.label;
@@ -268,6 +250,10 @@ onMounted(async () => {
     address.value = data.address;
     pond_amount.value = data.pool_amount;
     wide.value = data.wide;
+    loc.value = {
+      lat: data.lat,
+      lng: data.long,
+    };
   }
   await hideLoader();
 });
@@ -298,7 +284,7 @@ const getVillages = async (value: any) => {
   kelurahan.value = JSON.parse(value).name;
 };
 
-const { postResource } = useApi();
+const { putResource } = useApi();
 const save = async () => {
   const data = {
     name: pond_name.value,
@@ -314,7 +300,7 @@ const save = async () => {
   };
   Sweet.confirm("Apakah anda yakin ingin menyimpan data ini?", async () => {
     showLoader();
-    const response = await postResource("/pond", data);
+    const response = await putResource("/pond/" + id.value, data);
     if (response) {
       Notify.success("Berhasil menambahkan tambak");
     }

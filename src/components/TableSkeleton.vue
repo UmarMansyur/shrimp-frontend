@@ -57,9 +57,14 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{
-  column: number;
-  row: number;
-
-}>();
+defineProps({
+  column: {
+    type: Number,
+    default: 4
+  },
+  row: {
+    type: Number,
+    default: 10
+  }
+})
 </script>

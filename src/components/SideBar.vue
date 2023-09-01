@@ -42,11 +42,11 @@
             <i class="ri-survey-line"></i> <span data-key="t-ponds">Laporan</span>
           </RouterLink>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <RouterLink to="/group" class="nav-link menu-link" :class="{ 'active': $route.path.includes('/group') }">
             <i class="ri-links-fill"></i> <span data-key="t-ponds">Data Kelompok</span>
           </RouterLink>
-        </li>
+        </li> -->
       </ul>
     </div>
   </div>

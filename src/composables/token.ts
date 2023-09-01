@@ -49,7 +49,6 @@ export default function useToken() {
                 await refresh();
             }
         } catch (error: any) {
-            console.log(error);
             Notify.error(error.message);
         }
     }

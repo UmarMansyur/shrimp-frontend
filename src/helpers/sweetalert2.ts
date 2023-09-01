@@ -8,11 +8,15 @@ export default class Sweet {
       text: message,
     });
   }
-  static error(message: string): void {
+  static error(message: string, callback: any): void {
     Swal.fire({
       icon: 'error',
       title: 'Gagal',
       text: message,
+    }).then((result: any) => {
+      if (result.isConfirmed) {
+        callback();
+      }
     });
   }
   static warning(message: string): void {

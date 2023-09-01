@@ -1,7 +1,9 @@
 <template>
-  <div class="mb-3">
-    <label class="form-label" :for="id">{{ label }}: </label>
-    <select :name="id" :id="id" class="form-select" v-model="selected"></select>
+  <div class="row mb-3">
+    <div class="col-12">
+      <label class="form-label" :for="id">{{ label }}: </label>
+      <select :name="id" :id="id" class="form-select" v-model="selected" :class="class"></select>
+    </div>
   </div>
 </template>
 
@@ -22,8 +24,13 @@ const props = defineProps({
   id: {
     type: String,
     required: true,
+    default: "",
   },
   selectedDefault: {
+    required: false,
+    default: "",
+  },
+  class: {
     type: String,
     required: false,
     default: "",
