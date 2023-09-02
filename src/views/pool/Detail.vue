@@ -79,15 +79,19 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-4 mb-3">
+              <div class="col-3 mb-3">
                 <label for="height" class="form-label">Panjang:</label>
                 <input type="text" class="form-control" id="height" disabled v-model="pool.height">
               </div>
-              <div class="col-4 mb-3">
-                <label for="width" class="form-label">Lebar:</label>
+              <div class="col-3 mb-3">
+                <label for="width" class="form-label">{{ pool.label }}:</label>
                 <input type="text" class="form-control" id="width" disabled v-model="pool.width">
               </div>
-              <div class="col-4 mb-3">
+              <div class="col-3 mb-3">
+                <label for="pool_type" class="form-label">Jenis Kolam:</label>
+                <input type="text" class="form-control" id="pool_type" disabled v-model="pool.is_circle">
+              </div>
+              <div class="col-3 mb-3">
                 <label for="width" class="form-label">Luas:</label>
                 <input type="text" class="form-control" id="width" disabled v-model="pool.wide">
               </div>
@@ -181,6 +185,8 @@ const loadMap = async () => {
     height: response.height ? response.height : 0,
     doc: response.doc ? response.doc : 0,
     stock_date: response.stock_date ? response.stock_date : 'Belum di set',
+    is_circle: response.is_circle ? 'Lingkaran' : 'Persegi',
+    label: response.is_circle ? 'Kedalaman' : 'Lebar',
   };
 }
 

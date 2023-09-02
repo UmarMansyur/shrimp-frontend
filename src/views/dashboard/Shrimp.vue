@@ -19,7 +19,7 @@
     </div>
     <div class="row mt-2">
       <div class="col-12">
-        <span>Rombasan Pragaan Sumenep</span> <a href="" class="text-info">Lihat Daftar kolam</a>
+        <span>Rombasan Pragaan Sumenep</span> <RouterLink to="/pool" class="text-info">Lihat Daftar kolam</RouterLink>
       </div>
     </div>
 

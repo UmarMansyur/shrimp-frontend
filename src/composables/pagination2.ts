@@ -69,7 +69,6 @@ export default function usePagination(path: any, q?:any ,query?: any) {
     } else {
       query.push(`${path.value}?page=${currentPage.value}&limit=${limitPage.value}`);
     }
-    console.log(query);
     const response = await getResource(query[0]);
     result.value = response.data;
     totalPage.value = response.total_page;

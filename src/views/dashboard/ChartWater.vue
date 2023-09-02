@@ -1,5 +1,5 @@
 <template>
-  <canvas id="chart" height="100%"></canvas>
+  <canvas id="chart" class="d-none" style="height 1400px"></canvas>
 </template>
 
 

@@ -222,8 +222,10 @@ const loadPool = async () => {
         };
       })
     });
-    select.value.setChoiceByValue(response.data[0].id);
-    pool.value = response.data[0].id;
+    if(response.data.length > 0) {
+      select.value.setChoiceByValue(response.data[0].id);
+      pool.value = response.data[0].id;
+    }
   }
 };
 

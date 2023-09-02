@@ -79,7 +79,7 @@
           </div>
         </Modal>
       </div>
-      <div class="col-md-12 mt-5 text-dark">
+      <div class="col-md-12 mt-3 text-dark">
         <div class="table-responsive">
           <table class="table table-hover table-bordered text-center" aria-describedby="water-quality">
             <thead class="align-middle">
@@ -129,7 +129,7 @@
         </div>
       </div>
 
-      <div class="col-md-12 mt-3">
+      <div class="col-md-12 mt-3" v-if="result.length !== 0">
         <Pagination :current-page="currentPage" :is-first-page="isFirstPage" :is-last-page="isLastPage" :go-to="goToPage"
           :next-page="nextPage" :page-list="pageList" :total-page="totalPage" :prev-page="prevPage"
           :total-data="totalData">

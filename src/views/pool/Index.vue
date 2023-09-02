@@ -24,6 +24,8 @@ import Parent from '../Parent.vue';
 import Select from '../../components/Select.vue';
 import useApi from '../../composables/api';
 import { onMounted, ref } from 'vue';
+import Sweet from '../../helpers/sweetalert2';
+import router from '../../router';
 declare const Choices: any;
 
 const { getResource } = useApi();
@@ -48,6 +50,12 @@ const loadTambak = async () => {
       allowHTML: true,
       itemSelectText: '',
     });
+    if(response.data.length < 1) {
+      Sweet.error('Anda belum memiliki tambak', ()=> {
+        router.push('/pond/create');
+      });
+      return;
+    }
     select.setChoiceByValue(response.data[0].id);
     pondSelection.value = response.data[0].id;
   }
