@@ -4,6 +4,7 @@ import router from './router';
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
 import { createPinia } from 'pinia';
+import { createPahoMqttPlugin } from 'vue-paho-mqtt';
 
 createApp(App)
 .use(router)
