@@ -41,15 +41,14 @@
               </ul>
             </div>
           </div>
-          <!-- Tab panes -->
           <div class="tab-content text-muted overflow-hidden">
             <AncoInformation />
             <WaterQuality />
             <FeedInformation />
             <KimiaInformation />
           </div>
-        </div><!-- end card-body -->
-      </div><!-- end card -->
+        </div>
+      </div>
     </div>
   </div>
 </template>

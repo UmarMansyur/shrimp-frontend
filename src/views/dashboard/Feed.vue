@@ -7,17 +7,22 @@
       <div class="col-12 mb-3">
         <Pool></Pool>
       </div>
+    </div>
+    <div class="row"  v-if="pond.is_start">
       <div class="col-md-6 mb-3">
         <label for="date" class="form-label">Tanggal Pemberian Pakan: </label>
-        <VueDatePicker light="true" auto-apply format="yyyy-MM-dd" v-model="date" :enable-time-picker="false" :disabled="skipDay"/>
+        <VueDatePicker light="true" auto-apply format="yyyy-MM-dd" v-model="date" :enable-time-picker="false"
+          :disabled="skipDay" />
       </div>
       <div class="col-md-6 mb-3">
         <label for="time-feed" class="form-label">Waktu: </label>
-        <VueDatePicker light="true" auto-apply time-picker v-model="time" :is-24="true" enable-seconds  :disabled="skipDay"/>
+        <VueDatePicker light="true" auto-apply time-picker v-model="time" :is-24="true" enable-seconds
+          :disabled="skipDay" />
       </div>
       <div class="col-md-12 mb-3">
         <label for="amount" class="form-label">Jumlah(Kg): </label>
-        <input type="search" name="amount" id="amount" class="form-control" placeholder="Jumlah Pakan" v-model="amount" :disabled="skipDay">
+        <input type="search" name="amount" id="amount" class="form-control" placeholder="Jumlah Pakan" v-model="amount"
+          :disabled="skipDay">
       </div>
       <div class="col-md-12 mb-3">
         <div class="form-check form-switch form-switch-md">
@@ -36,11 +41,15 @@
         </button>
       </div>
     </div>
+    <div class="row" v-else>
+     <NotCycleFound></NotCycleFound>
+    </div>
 
   </Modal>
 </template>
 <script setup lang="ts">
 import { useField, useForm } from 'vee-validate';
+import NotCycleFound from '../../components/NotCycleFound.vue';
 import Modal from '../../components/Modal.vue';
 import Pool from '../../components/Pool.vue';
 import * as yup from 'yup';
@@ -77,7 +86,7 @@ const { value: skipDay } = useField<boolean>('skipDay');
 const pond = usePond();
 
 const save = async () => {
-  if(pond.pool_id === 0 ) return Notify.error('Kolam belum dipilih');
+  if (pond.pool_id === 0) return Notify.error('Kolam belum dipilih');
   const data = {
     pool_id: pond.pool_id,
     date: date.value?.toISOString().split('T')[0],
@@ -92,7 +101,7 @@ const save = async () => {
     }
     clearData();
   });
-}
+};
 
 function clearData() {
   date.value = new Date();

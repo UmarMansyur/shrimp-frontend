@@ -2,6 +2,11 @@
   <div class="tab-pane active show" id="home" role="tabpanel">
     <h6 class="mb-0">Data Anco berikut adalah data hanco hari ini!</h6>
     <div class="row mt-4">
+      <div class="col-md-12" v-if="result.length === 0">
+        <div class="alert alert-info alert-top-border">
+          <p class="mb-0 text-center">Belum ada data anco hari ini!</p>
+        </div>
+      </div>
       <div class="col-md-3" v-for="item in result" :key="item.id">
         <div class="card overflow-hidden shadow-none border">
           <div class="card-body">
@@ -31,7 +36,7 @@
           </div>
         </div>
       </div>
-      <div class="col-12 mt-4">
+      <div class="col-12 mt-4" v-if="result.length > 0">
         <Pagination :current-page="currentPage" :is-first-page="isFirstPage" :is-last-page="isLastPage" :go-to="goToPage"
           :next-page="nextPage" :page-list="pageList" :total-page="totalPage" :prev-page="prevPage"
           :total-data="totalData">
@@ -121,9 +126,10 @@ import * as yup from 'yup';
 import { useField, useForm } from 'vee-validate';
 import useApi from '../../composables/api';
 import Sweet from '../../helpers/sweetalert2';
-
+import moment from 'moment-timezone';
+moment.tz.setDefault('Asia/Jakarta');
 const pond = usePond();
-const path = ref<string>('/anco/pool/' + pond.pool_id);
+const path = ref<string>("/ancol/date/" + moment(new Date()).format('YYYY-MM-DD') + `?pool_id=${pond.pool_id}`)
 const {
   result,
   currentPage,
@@ -179,7 +185,7 @@ const loadData = async () => {
 
 
 watch(pond, async () => {
-  path.value = '/anco/pool/' + pond.pool_id;
+  path.value = "/anco/date/" + new Date().toISOString().split('T')[0] + `?pool_id=${pond.pool_id}`;
   await loadData();
 });
 

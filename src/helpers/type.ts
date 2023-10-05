@@ -8,6 +8,8 @@ type userType = {
   gender: string,
   birthday: string,
   address: string,
+  createdAt: string,
+  prosentase: number,
 }
 
 export type {

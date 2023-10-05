@@ -6,6 +6,7 @@ export const usePond = defineStore({
   state: () => ({
     id: 0,
     pool: [],
+    is_start: false,
     pool_id: 0,
   }),
   getters: {

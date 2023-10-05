@@ -89,11 +89,16 @@
                   </button>
                 </td>
               </tr>
+              <tr v-if="result.length === 0" class="bg-light">
+                <td colspan="8" class="text-center">
+                  <img src="/assets/images/notfound.svg" alt="empty" class="img-fluid" width="500" />
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
       </div>
-      <div class="col-md-12 mt-3">
+      <div class="col-md-12 mt-3" v-if="result.length > 0">
         <Pagination :current-page="currentPage" :is-first-page="isFirstPage" :is-last-page="isLastPage" :go-to="goToPage"
           :next-page="nextPage" :page-list="pageList" :total-page="totalPage" :prev-page="prevPage"
           :total-data="totalData">
@@ -173,7 +178,7 @@ const pond = usePond();
 
 watch(pond, async () => {
   if (pond.pool_id) {
-    path.value = path.value + `?pool_id=${pond.pool_id}`;
+    path.value = "/kimia/date/" + new Date().toISOString().split('T')[0] + `?pool_id=${pond.pool_id}`;
     fetchData();
   }
 });

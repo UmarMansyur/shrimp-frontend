@@ -8,21 +8,19 @@
     <div class="pt-4 mb-4 mb-lg-3 pb-lg-4 profile-wrapper">
       <div class="row g-4">
         <div class="col-auto">
-          <div class="avatar-lg">
-            <img src="assets/images/users/avatar-1.jpg" alt="user-img" class="img-thumbnail rounded-circle">
+          <div class="avatar-xl">
+            <img :src="user.thumbnail" alt="user-img" class="rounded-circle avatar-xl img-thumbnail user-profile-image">
           </div>
         </div>
         <!--end col-->
         <div class="col">
           <div class="p-2">
-            <h3 class="text-white mb-1">Anna Adame</h3>
-            <p class="text-white text-opacity-75">Owner &amp; Founder</p>
+            <h3 class="text-white mb-1">{{ user.name }}</h3>
+            <p class="text-white text-opacity-75">{{ user.role }}</p>
             <div class="hstack text-white-50 gap-1">
               <div class="me-2"><i
-                  class="ri-map-pin-user-line me-1 text-white text-opacity-75 fs-16 align-middle"></i>California, United
-                States</div>
+                  class="ri-map-pin-user-line me-1 text-white text-opacity-75 fs-16 align-middle"></i>{{ user.address }}</div>
               <div>
-                <i class="ri-building-line me-1 text-white text-opacity-75 fs-16 align-middle"></i>Themesbrand
               </div>
             </div>
           </div>
@@ -64,9 +62,12 @@
                     <div class="card-body">
                       <h5 class="card-title mb-5">Lengkapi Profil Anda</h5>
                       <div class="progress animated-progress custom-progress progress-label">
-                        <div class="progress-bar bg-danger" role="progressbar" style="width: 30%" aria-valuenow="30"
+                        <div class="progress-bar bg-danger" role="progressbar" :style="
+                          'width: ' + user.prosentase + '%'
+                        "
+                           aria-valuenow="30"
                           aria-valuemin="0" aria-valuemax="100">
-                          <div class="label">30%</div>
+                          <div class="label">{{ user.prosentase }}%</div>
                         </div>
                       </div>
                     </div>
@@ -79,32 +80,33 @@
                           <tbody>
                             <tr>
                               <th class="ps-0" scope="row">Nama Lengkap :</th>
-                              <td class="text-muted">Anna Adame</td>
+                              <td class="text-muted">{{ user.name }}</td>
                             </tr>
                             <tr>
                               <th class="ps-0" scope="row">Jenis Kelamin :</th>
-                              <td class="text-muted">Pria</td>
+                              <td class="text-muted" style="text-transform: capitalize;">{{ user.gender }}</td>
                             </tr>
                             <tr>
                               <th class="ps-0" scope="row">Tanggal Lahir:</th>
-                              <td class="text-muted">29/07/2001</td>
+                              <td class="text-muted">{{ user.birthday }}</td>
                             </tr>
                             <tr>
                               <th class="ps-0" scope="row">No.Hp :</th>
-                              <td class="text-muted">+(1) 987 6543</td>
+                              <td class="text-muted">{{ user.phone ? user.phone : '-' }}</td>
                             </tr>
                             <tr>
                               <th class="ps-0" scope="row">E-mail :</th>
-                              <td class="text-muted">daveadame@velzon.com</td>
+                              <td class="text-muted">{{ user.email }}</td>
                             </tr>
                             <tr>
                               <th class="ps-0" scope="row">Alamat :</th>
-                              <td class="text-muted">California, United States
+                              <td class="text-muted">{{ user.address }}
                               </td>
                             </tr>
                             <tr>
                               <th class="ps-0" scope="row">Tanggal Mendaftar :</th>
-                              <td class="text-muted">24 Nov 2021</td>
+                              <td class="text-muted">{{ user.createdAt ? user.createdAt.slice(0, 10) : '-' }}
+                              </td>
                             </tr>
                           </tbody>
                         </table>
@@ -121,11 +123,11 @@
                   <div class="row">
                     <div class="col-md-12 mb-3">
                       <label for="email" class="form-label">Email: </label>
-                      <input type="search" id="email" name="email" class="form-control" readonly autocomplete="false">
+                      <input type="search" id="email" name="email" class="form-control" readonly autocomplete="false" :value="user.email">
                     </div>
                     <div class="col-md-12 mb-3">
                       <label for="username" class="form-label">Username: </label>
-                      <input type="search" id="username" name="username" class="form-control" readonly autocomplete="false">
+                      <input type="search" id="username" name="username" class="form-control" readonly autocomplete="false" :value="user.name">
                     </div>
                   </div>
                 </div>
@@ -139,5 +141,7 @@
 </template>
 
 <script setup lang="ts">
+import { useSessionStore } from '../../stores/session';
 import Parent from '../Parent.vue';
+const user = useSessionStore();
 </script>

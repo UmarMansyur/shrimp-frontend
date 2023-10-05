@@ -13,70 +13,76 @@
         <label for="kolam" class="form-label">Kolam: </label>
         <Pool></Pool>
       </div>
-      <div class="col-md-6 mb-3">
-        <label for="feed" class="form-label">Tanggal Pemberian Pakan</label>
-        <VueDatePicker light="true" auto-apply format="yyyy-MM-dd" v-model="feed_stock" :enable-time-picker="false" :class="{
-          'is-invalid': !feed_stock_err.valid && feed_stock_err.dirty }" />
       </div>
-      <div class="col-md-6 mb-3">
-        <label for="time-feed" class="form-label">Waktu: </label>
-        <select name="time-feed" id="time-feed" class="form-select" v-model="time" :class="{ 'is-invalid': !time_err.valid && time_err.dirty }">
-          <option value="">Pilih Waktu</option>
-        </select>
-      </div>
-      <div class="col-md-12 mb-3">
-        <label for="date" class="form-label">Waktu Cek Anco: </label>
-        <VueDatePicker light="true" auto-apply time-picker v-model="timecheck" :class="{
-          'is-invalid': !timecheck_err.valid && timecheck_err.dirty }" />
-      </div>
-      <div class="col-md-12 mb-3" v-for="i in amountAnco" :key="i">
-        <label for="anco" class="form-label">Anco {{ i }}: </label>
-        <div class="row justify-content-between">
-          <div class="col-md-4">
-            <div class="form-check form-switch form-switch-md mb-3 ">
-              <input class="form-check-input" type="checkbox" role="switch" id="finished" v-model="finished[i]"
-                @click="finishedClick(i)" :class="{ 'is-invalid': !finished_err.valid && finished_err.dirty }">
-              <label class="form-check-label" for="finished">Habis</label>
+      <div class="row" v-show="pond.is_start">
+        <div class="col-md-6 mb-3">
+          <label for="feed" class="form-label">Tanggal Pemberian Pakan</label>
+          <VueDatePicker light="true" auto-apply format="yyyy-MM-dd" v-model="feed_stock" :enable-time-picker="false" :class="{
+            'is-invalid': !feed_stock_err.valid && feed_stock_err.dirty }" />
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="time-feed" class="form-label">Waktu: </label>
+          <select name="time-feed" id="time-feed" class="form-select" v-model="time" :class="{ 'is-invalid': !time_err.valid && time_err.dirty }">
+            <option value="">Pilih Waktu</option>
+          </select>
+        </div>
+        <div class="col-md-12 mb-3">
+          <label for="date" class="form-label">Waktu Cek Anco: </label>
+          <VueDatePicker light="true" auto-apply time-picker v-model="timecheck" :class="{
+            'is-invalid': !timecheck_err.valid && timecheck_err.dirty }" />
+        </div>
+        <div class="col-md-12 mb-3" v-for="i in amountAnco" :key="i">
+          <label for="anco" class="form-label">Anco {{ i }}: </label>
+          <div class="row justify-content-between">
+            <div class="col-md-4">
+              <div class="form-check form-switch form-switch-md mb-3 ">
+                <input class="form-check-input" type="checkbox" role="switch" id="finished" v-model="finished[i]"
+                  @click="finishedClick(i)" :class="{ 'is-invalid': !finished_err.valid && finished_err.dirty }">
+                <label class="form-check-label" for="finished">Habis</label>
+              </div>
             </div>
-          </div>
-          <div class="col-md-4">
-            <div class="form-check form-switch form-switch-md mb-3 ">
-              <input class="form-check-input" type="checkbox" role="switch" id="little-left" v-model="littleLeft[i]"
-                @click="littleLeftClick(i)" :class="{ 'is-invalid': !littleLeft_err.valid && littleLeft_err.dirty }">
-              <label class="form-check-label" for="little-left">Sisa Sedikit</label>
+            <div class="col-md-4">
+              <div class="form-check form-switch form-switch-md mb-3 ">
+                <input class="form-check-input" type="checkbox" role="switch" id="little-left" v-model="littleLeft[i]"
+                  @click="littleLeftClick(i)" :class="{ 'is-invalid': !littleLeft_err.valid && littleLeft_err.dirty }">
+                <label class="form-check-label" for="little-left">Sisa Sedikit</label>
+              </div>
             </div>
-          </div>
-          <div class="col-md-4">
-            <div class="form-check form-switch form-switch-md mb-3 ">
-              <input class="form-check-input" type="checkbox" role="switch" id="left a lot" v-model="leftALot[i]"
-                @click="leftAllotClick(i)" :class="{ 'is-invalid': !leftALot_err.valid && leftALot_err.dirty }">
-              <label class="form-check-label" for="left a lot">Sisa Banyak</label>
+            <div class="col-md-4">
+              <div class="form-check form-switch form-switch-md mb-3 ">
+                <input class="form-check-input" type="checkbox" role="switch" id="left a lot" v-model="leftALot[i]"
+                  @click="leftAllotClick(i)" :class="{ 'is-invalid': !leftALot_err.valid && leftALot_err.dirty }">
+                <label class="form-check-label" for="left a lot">Sisa Banyak</label>
+              </div>
             </div>
           </div>
         </div>
+        <div class="col-md-12 mb-3">
+          <label for="desc" class="form-label">Deskripsi: </label>
+          <textarea name="desc" id="desc" cols="30" rows="10" class="form-control" v-model="desc"
+            :class="{ 'is-invalid': !desc_err.valid && desc_err.dirty }"
+          ></textarea>
+        </div>
+        <div class="col-6 mb-3">
+          <button class="btn btn-light">
+            <i class="bx bx-x"></i> Batal
+          </button>
+        </div>
+        <div class="col-6 mb-3 text-end">
+          <button class="btn btn-success" @click="save" data-bs-dismiss="modal" :disabled="!meta.valid">
+            <i class="bx bx-send"></i> Simpan
+          </button>
+        </div>
       </div>
-      <div class="col-md-12 mb-3">
-        <label for="desc" class="form-label">Deskripsi: </label>
-        <textarea name="desc" id="desc" cols="30" rows="10" class="form-control" v-model="desc"
-          :class="{ 'is-invalid': !desc_err.valid && desc_err.dirty }"
-        ></textarea>
+      <div class="row" v-show="!pond.is_start">
+          <NotCycleFound></NotCycleFound>
       </div>
-      <div class="col-md-6 mb-3">
-        <button class="btn btn-light">
-          <i class="bx bx-x"></i> Batal
-        </button>
-      </div>
-      <div class="col-md-6 mb-3 text-end">
-        <button class="btn btn-success" @click="save" data-bs-dismiss="modal" :disabled="!meta.valid">
-          <i class="bx bx-send"></i> Simpan
-        </button>
-      </div>
-    </div>
   </Modal>
 </template>
 
 <script setup lang="ts">
 declare const Choices: any;
+import NotCycleFound from '../../components/NotCycleFound.vue';
 import { useField, useForm } from 'vee-validate';
 import Modal from '../../components/Modal.vue';
 import Pool from '../../components/Pool.vue';

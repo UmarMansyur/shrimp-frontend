@@ -8,34 +8,43 @@
         <label for="kolam" class="form-label">Kolam: </label>
         <Pool></Pool>
       </div>
+    </div>
+    <div class="row" v-show="pond.is_start">
       <div class="col-md-6 mb-3">
         <label for="date" class="form-label">Tanggal Pengecekan: </label>
-        <VueDatePicker auto-apply format="yyyy-MM-dd" :enable-time-picker="false" v-model="date" :class="date_meta.dirty && !date_meta.valid ? 'is-invalid' : ''" />
+        <VueDatePicker auto-apply format="yyyy-MM-dd" :enable-time-picker="false" v-model="date"
+          :class="date_meta.dirty && !date_meta.valid ? 'is-invalid' : ''" />
       </div>
       <div class="col-md-6 mb-3">
         <label for="date" class="form-label">Waktu Pengecekan: </label>
-        <VueDatePicker auto-apply time-picker v-model="time" :class="time_meta.dirty && !time_meta.valid ? 'is-invalid' : ''" />
+        <VueDatePicker auto-apply time-picker v-model="time"
+          :class="time_meta.dirty && !time_meta.valid ? 'is-invalid' : ''" />
       </div>
       <div class="col-md-6 mb-3">
         <label for="pH" class="form-label">pH: </label>
-        <input type="search" class="form-control" id="pH" placeholder="pH" v-model="ph" :class="ph_meta.dirty && !ph_meta.valid ? 'is-invalid' : ''">
+        <input type="search" class="form-control" id="pH" placeholder="pH" v-model="ph"
+          :class="ph_meta.dirty && !ph_meta.valid ? 'is-invalid' : ''">
       </div>
       <div class="col-md-6 mb-3">
         <label for="salinitas" class="form-label">Salinitas: </label>
-        <input type="search" class="form-control" id="salinitas" placeholder="salinitas" v-model="salinitas" :class="salinitas_meta.dirty && !salinitas_meta.valid ? 'is-invalid' : ''">
+        <input type="search" class="form-control" id="salinitas" placeholder="Salinitas" v-model="salinitas"
+          :class="salinitas_meta.dirty && !salinitas_meta.valid ? 'is-invalid' : ''">
       </div>
       <div class="col-md-6 mb-3">
         <label for="temperature" class="form-label">Suhu: </label>
-        <input type="search" class="form-control" id="temperature" placeholder="temperature" v-model="temperature" :class="temperature_meta.dirty && !temperature_meta.valid ? 'is-invalid' : ''">
+        <input type="search" class="form-control" id="temperature" placeholder="Suhu" v-model="temperature"
+          :class="temperature_meta.dirty && !temperature_meta.valid ? 'is-invalid' : ''">
       </div>
       <div class="col-md-6 mb-3">
         <label for="do" class="form-label">DO: </label>
-        <input type="search" class="form-control" id="Do" placeholder="do" v-model="Do" :class="Do_meta.dirty && !Do_meta.valid ? 'is-invalid' : ''">
+        <input type="search" class="form-control" id="Do" placeholder="DO" v-model="Do"
+          :class="Do_meta.dirty && !Do_meta.valid ? 'is-invalid' : ''">
       </div>
       <div class="col-md-6 mb-3">
         <label for="water-color" class="form-label">Warna Air: </label>
-        <select class="form-select" aria-label="Default select example" v-model="waterColor" id="water-color" :class="waterColor_meta.dirty && !waterColor_meta.valid ? 'is-invalid' : ''">
-          <option value="" disabled> --- Warna Air --- </option>
+        <select class="form-select" aria-label="Default select example" v-model="waterColor" id="water-color"
+          :class="waterColor_meta.dirty && !waterColor_meta.valid ? 'is-invalid' : ''">
+          <option value="" disabled> Pilih Warna Air </option>
           <option value="Kuning">Kuning</option>
           <option value="Kuning Kehijauan">Kuning Kehijauan</option>
           <option value="Coklat">Coklat</option>
@@ -54,7 +63,8 @@
       </div>
       <div class="col-md-6 mb-3">
         <label for="brightness" class="form-label">Kecerahan: </label>
-        <input type="search" class="form-control" id="brightness" placeholder="brightness" v-model="brightness" :class="brightness_meta.dirty && !brightness_meta.valid ? 'is-invalid' : ''">
+        <input type="search" class="form-control" id="brightness" placeholder="Kecerahan" v-model="brightness"
+          :class="brightness_meta.dirty && !brightness_meta.valid ? 'is-invalid' : ''">
       </div>
       <div class="col-md-6">
         <button class="btn btn-light" data-bs-dismiss="modal">
@@ -66,6 +76,9 @@
           <i class="bx bx-send"></i> Simpan
         </button>
       </div>
+    </div>
+    <div class="row" v-show="!pond.is_start">
+      <NotCycleFound />
     </div>
   </Modal>
 </template>
@@ -81,6 +94,7 @@ import { usePond } from '../../stores/pond';
 import useApi from '../../composables/api';
 import Notify from '../../helpers/notify';
 import { convertMinutes } from '../../helpers/convertMinutes';
+import NotCycleFound from '../../components/NotCycleFound.vue';
 
 const schema = yup.object().shape({
   date: yup.date().required(),
@@ -105,7 +119,7 @@ const { meta } = useForm({
     waterColor: '',
     brightness: '',
   }
-}); 
+});
 
 const { value: date, meta: date_meta } = useField<Date>('date');
 const { value: time, meta: time_meta } = useField<string>('time');
@@ -116,18 +130,18 @@ const { value: Do, meta: Do_meta } = useField<number>('do');
 const { value: waterColor, meta: waterColor_meta } = useField<string>('waterColor');
 const { value: brightness, meta: brightness_meta } = useField<number>('brightness');
 
-onMounted(()=> {
+onMounted(() => {
   new Choices('#water-color', {
     searchEnabled: true,
     itemSelectText: '',
     allowHTML: true,
   });
-})
+});
 
 const pond = usePond();
 const { postResource } = useApi();
 const save = async () => {
-  if(pond.pool_id === 0) return Notify.error('Kolam belum dipilih');
+  if (pond.pool_id === 0) return Notify.error('Kolam belum dipilih');
   const data = {
     pool_id: pond.pool_id,
     date: date.value.toISOString().split('T')[0],
@@ -139,10 +153,10 @@ const save = async () => {
     water_color: waterColor.value,
     brightness: brightness.value,
     water_height: 0,
-  }
-  const response = await postResource('/water', data)
-  if(response) {
+  };
+  const response = await postResource('/water', data);
+  if (response) {
     Notify.success('Berhasil menyimpan data');
   }
-}
+};
 </script>
