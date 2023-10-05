@@ -63,7 +63,7 @@
                       <p class="text-muted">Masuk untuk melanjutkan.</p>
                     </div>
                     <div class="row justify-content-center d-flex mt-4 mb-0">
-                      <GoogleLogin :callback="callback"/>
+                      <GoogleLogin :callback="callback" />
                     </div>
                     <div class="mt-3">
                       <form action="index.html">
@@ -144,7 +144,7 @@ import useToken from "../../composables/token";
 import Notify from "../../helpers/notify";
 import router from "../../router";
 import { GoogleLogin } from "vue3-google-login";
-import { decodeCredential } from 'vue3-google-login'
+import { decodeCredential } from 'vue3-google-login';
 
 
 const { setToken } = useToken();
@@ -184,8 +184,21 @@ const tryLogin = async () => {
     Notify.error(error.response ? error.response.data.message : error.message);
   }
 };
-const callback = (response: any) => {
-  const userData = decodeCredential(response.credential);
-  console.log(userData);
+const callback = async (callback: any) => {
+  if (!callback.credential) return;
+  const userData: any = decodeCredential(callback.credential);
+
+  const data = {
+    username: userData.name,
+    email: userData.email,
+    thumbnail: userData.picture,
+    password: userData.sub,
+  };
+  const response = await axios.post(import.meta.env.VITE_API_SHRIMP + "/auth/login/google", data);
+  if(response) {
+    setToken(response.data.data.token_access);
+    router.replace("/");
+  }
+  Notify.success("Berhasil masuk");
 };
 </script>
