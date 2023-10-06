@@ -55,7 +55,7 @@
                         <tr v-if="result.length === 0" class="bg-light">
                           <td colspan="5" class="text-center">
                             <img
-                              src="/assets/images/notfound.svg"
+                              src="/assets/images/not-found.svg"
                               alt="empty"
                               class="img-fluid"
                               width="500"

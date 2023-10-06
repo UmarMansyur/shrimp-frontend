@@ -91,7 +91,7 @@
               </tr>
               <tr v-if="result.length === 0" class="bg-light">
                 <td colspan="8" class="text-center">
-                  <img src="/assets/images/notfound.svg" alt="empty" class="img-fluid" width="500" />
+                  <img src="/assets/images/not-found.svg" alt="empty" class="img-fluid" width="500" />
                 </td>
               </tr>
             </tbody>

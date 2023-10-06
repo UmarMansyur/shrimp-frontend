@@ -114,7 +114,15 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: 'Login'
     },
-    component: () => import("../views/authentication/Parent.vue"),
+    component: () => import("../views/authentication/Login.vue"),
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    meta: {
+      title: 'Register'
+    },
+    component: () => import("../views/authentication/Register.vue"),
   }
 ];
 
@@ -126,14 +134,14 @@ const router = createRouter({
 router.beforeEach(async (to, _from) => {
   document.title = to.meta.title as string + ' | Bincang Budidaya Udang';
   const { setUser, getUser } = useSessionStore();
-  if (to.name != 'Login' && (!sessionStorage.getItem('token') || sessionStorage.getItem('token')!.length <= 13)) {
+  if (to.name != 'Login' && (!sessionStorage.getItem('token') || sessionStorage.getItem('token')!.length <= 13) && to.name != 'Register') {
     return { path: '/login' };
   }
 
   if (sessionStorage.getItem('token') && to.name == 'Login') {
     return { path: '/' };
   }
-  if (sessionStorage.getItem('token')  && to.name != 'login' && to.name != 'NotFound') {
+  if (sessionStorage.getItem('token')  && to.name != 'login' && to.name != 'not-found') {
     if (getUser.id === 0) {
       await setUser();
       isAdmin.value = getUser.role == 'Administrator' ? true : false;
