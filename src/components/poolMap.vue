@@ -74,7 +74,7 @@ const props = defineProps({
   }
 });
 
-const path = ref<string>('/pool/list/me/' + props.pondId);
+const path = ref<string>('/pool/list/me' + props.pondId);
 const {
   result,
   currentPage,

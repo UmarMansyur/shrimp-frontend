@@ -64,7 +64,7 @@ export default function usePagination(path: string, q?:any ,query?: any) {
 
   async function fetchData() {
     let query = [];
-    if(q.value){
+    if(q.value && q.value != ''){
       query.push(`${path}${q.value}&page=${currentPage.value}&limit=${limitPage.value}`);
     } else {
       query.push(`${path}?page=${currentPage.value}&limit=${limitPage.value}`);

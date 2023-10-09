@@ -211,7 +211,11 @@ const loadPonds = async () => {
 };
 const select = ref<any>(null);
 const loadPool = async () => {
-  const response = await getResource('/pool/list/me/' + pond.value);
+  const path = ref<string>('/pool/list/me');
+  if(pond.value) {
+    path.value = '/pool/list/me/' + pond.value;
+  }
+  const response = await getResource(path.value);
   if (response) {
     select.value = new Choices('#pool', {
       allowHTML: true,

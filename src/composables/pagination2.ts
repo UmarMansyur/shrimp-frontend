@@ -3,10 +3,10 @@ import useApi from "./api";
 
 const { getResource } = useApi();
 
-export default function usePagination(path: any, q?:any ,query?: any) {
+export default function usePagination(path: any, q?: any, query?: any) {
   const totalPage = ref<number>(0);
   const currentPage = ref<number>(1);
-  const result:any = ref<any[]>([]);
+  const result: any = ref<any[]>([]);
   const pageList = ref<number[]>([]);
   const limitPage = ref<number>(10);
   const totalData = ref<number>(0);
@@ -27,10 +27,10 @@ export default function usePagination(path: any, q?:any ,query?: any) {
   }
 
   async function goToPage(page: number) {
-   if(page > 0 && page <= totalPage.value){
-     currentPage.value = page;
-   }
-   await fetchData();
+    if (page > 0 && page <= totalPage.value) {
+      currentPage.value = page;
+    }
+    await fetchData();
   }
 
   async function goToFirstPage() {
@@ -64,7 +64,8 @@ export default function usePagination(path: any, q?:any ,query?: any) {
 
   async function fetchData() {
     let query = [];
-    if(q.value){
+    
+    if (q.value && q.value != '') {
       query.push(`${path.value}${q.value}&page=${currentPage.value}&limit=${limitPage.value}`);
     } else {
       query.push(`${path.value}?page=${currentPage.value}&limit=${limitPage.value}`);
@@ -81,7 +82,7 @@ export default function usePagination(path: any, q?:any ,query?: any) {
 
   async function search() {
     let search = [];
-    if(q != ''){
+    if (q != '') {
       search.push(`${path.value}${q.value}&page=${currentPage.value}&limit=${limitPage.value}&search=${query.value}`);
     } else {
       search.push(`${path.value}?page=${currentPage.value}&limit=${limitPage.value}&search=${query.value}`);
@@ -129,6 +130,6 @@ export default function usePagination(path: any, q?:any ,query?: any) {
     isLastPage,
     isFirstPage,
     fetchData
-  }
+  };
 
 }

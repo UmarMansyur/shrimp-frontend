@@ -6,7 +6,7 @@
         <p class="text-muted">Daftar untuk melanjutkan.</p>
       </div>
       <div class="row justify-content-center d-flex mt-4 mb-0">
-        <GoogleLogin :callback="callback" prompt />
+        <GoogleLogin :callback="callback" />
       </div>
       <div class="mt-3">
         <form action="index.html">
@@ -31,7 +31,7 @@
           </div>
 
           <div class="mt-4">
-            <button class="btn btn-success w-100" type="button" @click="tryLogin" :disabled="!meta.valid">
+            <button class="btn btn-success w-100" type="button" @click="tryRegister" :disabled="!meta.valid">
               <i class="bx bx-send fs-16 align-middle me-2"></i> Daftar Sekarang
             </button>
 
@@ -85,21 +85,6 @@ const { value: username } = useField<string>("username");
 const { value: email } = useField<string>("email");
 const { value: password } = useField<string>("password");
 
-const tryLogin = async () => {
-  try {
-    const response = await axios.post(import.meta.env.VITE_API_SHRIMP + "/auth/login", {
-      email: email.value,
-      password: password.value,
-    });
-    if (response) {
-      setToken(response.data.data.token_access);
-      router.replace("/");
-      return;
-    }
-  } catch (error: any) {
-    Notify.error(error.response ? error.response.data.message : error.message);
-  }
-};
 const callback = async (callback: any) => {
   if (!callback.credential) return;
   const userData: any = decodeCredential(callback.credential);
@@ -116,4 +101,25 @@ const callback = async (callback: any) => {
     router.replace("/");
   }
 };
+
+const tryRegister = async () => {
+  try {
+    document.getElementById("layer")?.classList.remove("d-none");
+    const response = await axios.post(import.meta.env.VITE_API_SHRIMP + "/auth/register", {
+      username: username.value,
+      email: email.value,
+      password: password.value,
+    });
+    document.getElementById("layer")?.classList.add("d-none");
+    if (response) {
+      Notify.success("Berhasil mendaftar");
+    }
+    localStorage.setItem('email', email.value);
+    router.replace("/verification");
+  } catch (error: any) {
+    Notify.error(error.response ? error.response.data.message : error.message);
+  }
+};
+
+
 </script>

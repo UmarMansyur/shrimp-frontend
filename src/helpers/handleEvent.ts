@@ -68,7 +68,15 @@ const togglePassword = () => {
   } else {
     passwordInput.type = 'text';
   }
+}
 
+const toggleConfirmPassword = () => {
+  let passwordInput: any = document.querySelector('#confirm-password-input');
+  if(passwordInput.type == 'text') {
+    passwordInput.type = 'password';
+  } else {
+    passwordInput.type = 'text';
+  }
 }
 
 function navActiveSelection(el: any, position: string, isNext?: boolean) {
@@ -107,5 +115,6 @@ export {
   togglePassword,
   next,
   prev,
-  navActiveSelection
+  navActiveSelection,
+  toggleConfirmPassword
 };

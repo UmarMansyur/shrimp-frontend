@@ -75,33 +75,33 @@
           <div class="card-header border-0 align-items-center d-flex">
             <h4 class="card-title mb-0 flex-grow-1">Monitoring Tambak</h4>
             <div>
-              <select name="tool" id="tools" class="form-select">asdfsdf</select>
+              <select name="tool" id="tools" class="form-select">Data</select>
             </div>
           </div>
           <div class="card-header p-0 border-0 bg-light-subtle">
             <div class="row g-0 text-center">
               <div class="col-6 col-sm-3">
                 <div class="p-3 border border-dashed border-start-0">
-                  <h5 class="mb-1"><span class="counter-value" data-target="7585">7,585</span></h5>
-                  <p class="text-muted mb-0">Orders</p>
+                  <h5 class="mb-1"><span class="counter-value" data-target="7585">0</span></h5>
+                  <p class="text-muted mb-0">Ph</p>
                 </div>
               </div>
               <div class="col-6 col-sm-3">
                 <div class="p-3 border border-dashed border-start-0">
-                  <h5 class="mb-1">$<span class="counter-value" data-target="22.89">22.89</span>k</h5>
-                  <p class="text-muted mb-0">Earnings</p>
+                  <h5 class="mb-1"><span class="counter-value" data-target="22.89">0</span></h5>
+                  <p class="text-muted mb-0">Suhu</p>
                 </div>
               </div>
               <div class="col-6 col-sm-3">
                 <div class="p-3 border border-dashed border-start-0">
-                  <h5 class="mb-1"><span class="counter-value" data-target="367">367</span></h5>
-                  <p class="text-muted mb-0">Refunds</p>
+                  <h5 class="mb-1"><span class="counter-value" data-target="367">0</span></h5>
+                  <p class="text-muted mb-0">Salinitas</p>
                 </div>
               </div>
               <div class="col-6 col-sm-3">
                 <div class="p-3 border border-dashed border-start-0 border-end-0">
-                  <h5 class="mb-1 text-success"><span class="counter-value" data-target="18.92">18.92</span>%</h5>
-                  <p class="text-muted mb-0">Conversation Ratio</p>
+                  <h5 class="mb-1 text-success"><span class="counter-value" data-target="18.92">0</span></h5>
+                  <p class="text-muted mb-0">Tinggi Air</p>
                 </div>
               </div>
               <div class="col-12">
@@ -124,13 +124,13 @@ declare const ApexCharts: any;
 import Modal from '../../components/Modal.vue';
 import { onMounted, ref } from 'vue';
 import Parent from '../Parent.vue';
+// @ts-ignore
 import * as mqtt from 'mqtt/dist/mqtt.min';
-
 import * as yup from 'yup';
 import { useForm, useField } from 'vee-validate';
 import useApi from '../../composables/api';
 
-const client = mqtt.connect('ws://broker.hivemq.com:8000/mqtt');
+const client = mqtt.connect('wss://broker.hivemq.com:8000/mqtt');
 const chartStatus = ref<any>(null);
 
 const { meta } = useForm({

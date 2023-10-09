@@ -231,6 +231,10 @@ async function save() {
     long: longitude.value,
     is_circle: is_circle.value,
   };
+  if(latitude.value === 0 || longitude.value === 0) {
+    Notify.error('Harap aktifkan GPS terlebih dahulu');
+    return;
+  }
   showLoader();
   const response = await putResource('/pool/' + id.value, data);
   if (response) {

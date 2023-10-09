@@ -123,6 +123,30 @@ const routes: Array<RouteRecordRaw> = [
       title: 'Register'
     },
     component: () => import("../views/authentication/Register.vue"),
+  },
+  {
+    path: '/verification',
+    name: 'Verifikasi Akun',
+    meta: {
+      title: 'Verifikasi Akun'
+    },
+    component: () => import("../views/authentication/Verification.vue"),
+  },
+  {
+    path: '/forgot-password',
+    name: 'Forgot Password',
+    meta: {
+      title: 'Reset Password'
+    },
+    component: () => import("../views/authentication/Forgot.vue"),
+  },
+  {
+    path: '/reset-password',
+    name: 'Reset Password',
+    meta: {
+      title: 'Reset Password'
+    },
+    component: () => import("../views/authentication/Reset.vue"),
   }
 ];
 
@@ -134,14 +158,15 @@ const router = createRouter({
 router.beforeEach(async (to, _from) => {
   document.title = to.meta.title as string + ' | Bincang Budidaya Udang';
   const { setUser, getUser } = useSessionStore();
-  if (to.name != 'Login' && (!sessionStorage.getItem('token') || sessionStorage.getItem('token')!.length <= 13) && to.name != 'Register') {
+  const except = ['Login', 'Register', 'Not Found', 'Verifikasi Akun', 'Reset Password', 'Forgot Password'];
+  if (!except.includes(to.name as string)&& (!sessionStorage.getItem('token') || sessionStorage.getItem('token')!.length <= 13)) {
     return { path: '/login' };
   }
 
   if (sessionStorage.getItem('token') && to.name == 'Login') {
     return { path: '/' };
   }
-  if (sessionStorage.getItem('token')  && to.name != 'login' && to.name != 'not-found') {
+  if (sessionStorage.getItem('token') && to.name != 'login' && to.name != 'not-found') {
     if (getUser.id === 0) {
       await setUser();
       isAdmin.value = getUser.role == 'Administrator' ? true : false;

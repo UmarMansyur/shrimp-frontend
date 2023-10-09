@@ -17,7 +17,7 @@
 
           <div class="mb-3">
             <div class="float-end">
-              <a href="auth-pass-reset-cover.html" class="text-muted" tabindex="-1">Forgot password?</a>
+              <RouterLink to="/forgot-password" class="text-muted" tabindex="-1">Forgot password?</RouterLink>
             </div>
             <label class="form-label" for="password-input">Password</label>
             <div class="position-relative auth-pass-inputgroup mb-3">
@@ -92,33 +92,47 @@ const { value: password } = useField<string>("password");
 
 const tryLogin = async () => {
   try {
+    document.getElementById('layer')?.classList.remove('d-none');
     const response = await axios.post(import.meta.env.VITE_API_SHRIMP + "/auth/login", {
       email: email.value,
       password: password.value,
     });
+    document.getElementById('layer')?.classList.add('d-none');
     if (response) {
       setToken(response.data.data.token_access);
       router.replace("/");
       return;
     }
   } catch (error: any) {
+    document.getElementById('layer')?.classList.add('d-none');
+    console.log(error.response);
+    if(error.response.data.httpCode === 403) {
+      Notify.error("This account is not verified, please click the kirim ulang button to resend the verification email");
+      localStorage.setItem('email', email.value);
+      router.replace("/verification");
+      return;
+    }
     Notify.error(error.response ? error.response.data.message : error.message);
   }
 };
 const callback = async (callback: any) => {
-  if (!callback.credential) return;
-  const userData: any = decodeCredential(callback.credential);
-  if (!userData) return Notify.error("Gagal masuk");
-  const data = {
-    username: userData.name,
-    email: userData.email,
-    thumbnail: userData.picture,
-    password: userData.sub,
-  };
-  const response = await axios.post(import.meta.env.VITE_API_SHRIMP + "/auth/login/google", data);
-  if (response) {
-    setToken(response.data.data.token_access);
-    router.replace("/");
+  try {
+    if (!callback.credential) return;
+    const userData: any = decodeCredential(callback.credential);
+    if (!userData) return Notify.error("Gagal masuk");
+    const data = {
+      username: userData.name,
+      email: userData.email,
+      thumbnail: userData.picture,
+      password: userData.sub,
+    };
+    const response = await axios.post(import.meta.env.VITE_API_SHRIMP + "/auth/login/google", data);
+    if (response) {
+      setToken(response.data.data.token_access);
+      router.replace("/");
+    }
+  } catch (error: any) {
+    Notify.error(error.response ? error.response.data.message : error.message);
   }
 };
 </script>

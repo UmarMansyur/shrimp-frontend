@@ -30,6 +30,10 @@ export default function useApi() {
     return makeRequest('POST', payload, endpoint);
   }
 
+  async function patchResource(endpoint: string, payload: any) {
+    return makeRequest('PATCH', payload, endpoint);
+  }
+
   async function putResource(endpoint: string, payload: any) {
     return makeRequest('PUT', payload, endpoint);
   }
@@ -119,6 +123,6 @@ export default function useApi() {
 
 
   return {
-    getResource, postResource, putResource, deleteResource, checkResponse, graphqlQuery, postResourceFile, putResourceFile
+    getResource, postResource, putResource, deleteResource, checkResponse, graphqlQuery, postResourceFile, putResourceFile, patchResource
   };
 }
