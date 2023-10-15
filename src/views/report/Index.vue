@@ -80,6 +80,7 @@
                 </thead>
                 <tbody>
                   <tr v-for="(item, index) in result" :key="index">
+                    <td>{{ item }}</td>
                     <td>
                       {{ item.created_at ? item.created_at.split('T')[0] : '' }}
                     </td>

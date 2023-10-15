@@ -154,6 +154,7 @@ const save = async () => {
     brightness: brightness.value,
     water_height: 0,
   };
+  console.log(data);
   const response = await postResource('/water', data);
   if (response) {
     Notify.success('Berhasil menyimpan data');

@@ -219,7 +219,7 @@ const { value: brightness, meta: brightness_meta } = useField<number>('brightnes
 const pond = usePond();
 watch(pond, () => {
   if (pond.pool_id === 0) return;
-  path.value = "/kimia/date/" + new Date().toISOString().split('T')[0] + `?pool_id=${pond.pool_id}`;
+  path.value = "/water/date/" + new Date().toISOString().split('T')[0] + `?pool_id=${pond.pool_id}`;
   fetchData();
 });
 const { putResource, getResource, deleteResource } = useApi();
