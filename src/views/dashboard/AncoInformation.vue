@@ -7,7 +7,7 @@
           <p class="mb-0 text-center">Belum ada data anco hari ini!</p>
         </div>
       </div>
-      <div class="col-md-3" v-for="item in result" :key="item.id">
+      <div class="col-lg-4 col-md-3" v-for="item in result" :key="item.id">
         <div class="card overflow-hidden shadow-none border">
           <div class="card-body">
             <div class="float-end">

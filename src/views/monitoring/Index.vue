@@ -75,32 +75,34 @@
           <div class="card-header border-0 align-items-center d-flex">
             <h4 class="card-title mb-0 flex-grow-1">Monitoring Tambak</h4>
             <div>
-              <select name="tool" id="tools" class="form-select">Data</select>
+              <select name="tool" id="tools" class="form-select" v-model="id_perangkat" @change="getChoiced">
+                <option value="">Pilih Perangkat</option>
+              </select>
             </div>
           </div>
           <div class="card-header p-0 border-0 bg-light-subtle">
             <div class="row g-0 text-center">
               <div class="col-6 col-sm-3">
                 <div class="p-3 border border-dashed border-start-0">
-                  <h5 class="mb-1"><span class="counter-value" data-target="7585">0</span></h5>
+                  <h5 class="mb-1"><span class="counter-value" data-target="7585">{{ ph }}</span></h5>
                   <p class="text-muted mb-0">Ph</p>
                 </div>
               </div>
               <div class="col-6 col-sm-3">
                 <div class="p-3 border border-dashed border-start-0">
-                  <h5 class="mb-1"><span class="counter-value" data-target="22.89">0</span></h5>
+                  <h5 class="mb-1"><span class="counter-value" data-target="22.89">{{ temperatures }}</span></h5>
                   <p class="text-muted mb-0">Suhu</p>
                 </div>
               </div>
               <div class="col-6 col-sm-3">
                 <div class="p-3 border border-dashed border-start-0">
-                  <h5 class="mb-1"><span class="counter-value" data-target="367">0</span></h5>
+                  <h5 class="mb-1"><span class="counter-value" data-target="367">{{ salinities }}</span></h5>
                   <p class="text-muted mb-0">Salinitas</p>
                 </div>
               </div>
               <div class="col-6 col-sm-3">
                 <div class="p-3 border border-dashed border-start-0 border-end-0">
-                  <h5 class="mb-1 text-success"><span class="counter-value" data-target="18.92">0</span></h5>
+                  <h5 class="mb-1 text-success"><span class="counter-value" data-target="18.92">{{ water_depths }}</span></h5>
                   <p class="text-muted mb-0">Tinggi Air</p>
                 </div>
               </div>
@@ -130,7 +132,7 @@ import * as yup from 'yup';
 import { useForm, useField } from 'vee-validate';
 import useApi from '../../composables/api';
 
-const client = mqtt.connect('wss://broker.hivemq.com:8000/mqtt');
+const client = mqtt.connect('ws://broker.hivemq.com:8000/mqtt');
 const chartStatus = ref<any>(null);
 
 const { meta } = useForm({
@@ -148,9 +150,6 @@ const { value: id_perangkat } = useField<string>('id_perangkat');
 const { value: pool } = useField<string>('pool_id');
 
 onMounted(async () => {
-  client.on('connect', () => {
-    client.subscribe('monitoring/tambak/udang/v1');
-  });
   await loadPool();
   await loadTools();
   await initilizeChart();
@@ -167,9 +166,54 @@ async function connect() {
   };
   const response = await postResource('/tool/', data);
   if (response) {
+    client.subscribe('monitoring/tambak/udang/v1/' + id_perangkat.value);
     client.publish('monitoring/tambak/udang/v1/' + id_perangkat.value, 'test');
   }
+  await loadPool();
 }
+
+const ph = ref<any>(0);
+const temperatures = ref<any>(0);
+const salinities = ref<any>(0);
+const water_depths = ref<any>(0);
+
+async function synchronize(id: string) {
+  client.subscribe('monitoring/tambak/udang/v1/' + id);
+  client.on('message', async (_topic: any, m: any) => {
+    let message = JSON.parse(m.toString());
+    ph.value = message.ph;
+    temperatures.value = message.suhu;
+    salinities.value = message.salinitas;
+    water_depths.value = message.ketinggian_air;
+    pH.value.push(Number(message.ph));
+    temperature.value.push(Number(message.suhu));
+    salinity.value.push(Number(message.salinitas));
+    water_depth.value.push(Number(message.ketinggian_air));
+
+    chartStatus.value.updateSeries([
+      {
+        name: 'pH',
+        data: pH.value
+      },
+      {
+        name: 'Temperature',
+        data: temperature.value
+      },
+      {
+        name: 'Salinity',
+        data: salinity.value
+      },
+      {
+        name: 'Water Depth',
+        data: water_depth.value,
+      },
+    ]);
+  });
+}
+
+const getChoiced = async () => {
+  synchronize(id_perangkat.value);
+};
 
 const colors = ref<string>('bg-primary');
 
@@ -205,11 +249,12 @@ const loadPool = async () => {
 
 const loadTools = async () => {
   const response = await getResource('/tool/list/me');
+
   if (response) {
     new Choices('#tools', {
       choices: response.data.map((item: any) => {
         return {
-          value: item.id,
+          value: item.tool_id,
           label: item.name,
         };
       }),
@@ -252,6 +297,13 @@ const initilizeChart = async () => {
     },
     dataLabels: {
       enabled: false,
+      // sembunyikan label 
+    },
+    // sembunyikan data di bawah chart
+    xaxis: {
+      labels: {
+        show: false
+      }
     },
     stroke: {
       curve: 'straight',
@@ -262,35 +314,7 @@ const initilizeChart = async () => {
   chartStatus.value.render();
 }
 
-client.on('message', async (_topic: any, m: any) => {
-  let message = m.toString();
-  pH.value.push(Number(message));
-  temperature.value.push(Number(message));
-  salinity.value.push(Number(message));
-  water_depth.value.push(Number(message));
 
-  chartStatus.value.updateSeries([
-    {
-      name: 'pH',
-      data: pH.value
-    },
-    {
-      name: 'Temperature',
-      data: temperature.value
-    },
-    {
-      name: 'Salinity',
-      data: salinity.value
-    },
-    {
-      name: 'Water Depth',
-      data: water_depth.value,
-    },
-  ]);
-
-  console.log(pH.value, temperature.value, salinity.value, water_depth.value);
-
-});
 
 
 </script>
