@@ -18,6 +18,7 @@ export default function useApi() {
       const data = await response.json();
       return data;
     } catch (error: any) {
+      document.getElementById('layer')?.classList.add('d-none');
       Notify.error(error.message);
     }
   };

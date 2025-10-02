@@ -117,6 +117,7 @@ const tryRegister = async () => {
     localStorage.setItem('email', email.value);
     router.replace("/verification");
   } catch (error: any) {
+    document.getElementById('layer')?.classList.add('d-none');
     Notify.error(error.response ? error.response.data.message : error.message);
   }
 };

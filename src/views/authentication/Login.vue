@@ -105,7 +105,6 @@ const tryLogin = async () => {
     }
   } catch (error: any) {
     document.getElementById('layer')?.classList.add('d-none');
-    console.log(error.response);
     if(error.response.data.httpCode === 403) {
       Notify.error("This account is not verified, please click the kirim ulang button to resend the verification email");
       localStorage.setItem('email', email.value);
