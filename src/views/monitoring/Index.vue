@@ -556,6 +556,8 @@ const loadDataMonitoring = async () => {
   });
   const data = await response.json();
   dataTable2.value = data.data;
+  // urutkan dari yang terbaru ke terlama
+  dataTable2.value.sort((a: any, b: any) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
   chart2.value.updateSeries([
     {
       name: 'pH',
