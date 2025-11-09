@@ -164,7 +164,17 @@
         </div>
       </div>
     </div>
-
+    
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title mb-0 flex-grow-1">Grafik Data Monitoring Historis</h4>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div id="chartRealtime2"></div>
+        </div>
+      </div>
+    </div>
     <!-- Tabel Data Monitoring dengan Pagination & Filter -->
     <div class="row">
       <div class="col-xl-12">
@@ -472,7 +482,7 @@ const pH = ref<any>([]);
 const temperature = ref<any>([]);
 const salinity = ref<any>([]);
 const water_depth = ref<any>([]);
-
+const chart2 = ref<any>(null);
 const initilizeChart = async () => {
   const options = {
     series: [
@@ -514,7 +524,9 @@ const initilizeChart = async () => {
   };
 
   chartStatus.value = await new ApexCharts(document.querySelector('#chartRealtime'), options);
+  chart2.value = await new ApexCharts(document.querySelector('#chartRealtime2'), options);
   chartStatus.value.render();
+  chart2.value.render();
 }
 
 // Format tanggal untuk ditampilkan di tabel
@@ -544,6 +556,24 @@ const loadDataMonitoring = async () => {
   });
   const data = await response.json();
   dataTable2.value = data.data;
+  chart2.value.updateSeries([
+    {
+      name: 'pH',
+      data: dataTable2.value.map((item: any) => Number(item.ph)),
+    },
+    {
+      name: 'Temperature',
+      data: dataTable2.value.map((item: any) => Number(item.temperature)),
+    },
+    {
+      name: 'TDS',
+      data: dataTable2.value.map((item: any) => Number(item.tds)),
+    },
+    {
+      name: 'DO',
+      data: dataTable2.value.map((item: any) => Number(item.do)),
+    },
+  ]);
   currentPage.value = 1; // Reset ke halaman pertama
 };
 
@@ -632,4 +662,5 @@ const resetFilter = () => {
   filterEndDate.value = '';
   currentPage.value = 1;
 };
+
 </script>
