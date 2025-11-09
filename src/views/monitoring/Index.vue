@@ -218,11 +218,25 @@
                   <tr v-for="(item, index) in paginatedData" :key="index">
                     <td>{{ (currentPage - 1) * itemsPerPage + index + 1 }}</td>
                     <td>{{ formatDate(item.timestamp) }}</td>
-                    <td><span class="badge bg-primary">{{ item.id }}</span></td>
-                    <td>{{ item.ph }}</td>
-                    <td>{{ item.temperature }}</td>
-                    <td>{{ item.tds }}</td>
-                    <td>{{ item.do }}</td>
+                    <td>
+                      <span class="badge bg-primary">{{ item.id }}</span>
+                    </td>
+                    <td>
+                      {{ item.ph }}
+                      <span class="badge" :class="{'bg-danger': item.ph > 8.5, 'bg-success': item.ph < 8}">{{ item.ph > 8.5 ? 'Tinggi' : item.ph < 8 ? 'Rendah' : 'Normal' }}</span>
+                    </td>
+                    <td>
+                      {{ item.temperature }}
+                      <span class="badge" :class="{'bg-danger': item.temperature > 32, 'bg-success': item.temperature < 27}">{{ item.temperature > 32 ? 'Tinggi' : item.temperature < 27 ? 'Rendah' : 'Normal' }}</span>
+                    </td>
+                    <td>
+                      {{ item.tds }}
+                      <span class="badge" :class="{'bg-danger': item.tds > 1000, 'bg-success': item.tds < 200}">{{ item.tds > 1000 ? 'Tinggi' : item.tds < 200 ? 'Rendah' : 'Normal' }}</span>
+                    </td>
+                    <td>
+                      {{ item.do }}
+                      <span class="badge" :class="{'bg-danger': item.do < 5, 'bg-success': item.do > 7}">{{ item.do < 5 ? 'Tinggi' : item.do > 7 ? 'Rendah' : 'Normal' }}</span>
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -524,6 +538,7 @@ const clearTable = async () => {
 };
 
 const loadDataMonitoring = async () => {
+
   const response = await fetch('https://api2.gruvana.my.id/data/' + id_perangkat.value, {
     method: 'GET'
   });
