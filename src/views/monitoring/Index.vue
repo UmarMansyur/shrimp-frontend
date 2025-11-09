@@ -123,6 +123,53 @@
         <div class="card">
           <div class="card-header align-items-center d-flex">
             <h4 class="card-title mb-0 flex-grow-1">Data Monitoring Real-time</h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-striped table-hover align-middle mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Waktu</th>
+                    <th scope="col">ID Perangkat</th>
+                    <th scope="col">pH</th>
+                    <th scope="col">Suhu (°C)</th>
+                    <th scope="col">TDS</th>
+                    <th scope="col">DO</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-if="dataTable.length === 0">
+                    <td colspan="8" class="text-center text-muted py-4">
+                      <i class="bx bx-info-circle fs-3"></i>
+                      <p class="mb-0">Belum ada data. Pilih perangkat untuk mulai monitoring.</p>
+                    </td>
+                  </tr>
+                  <tr v-for="(item, index) in dataTable" :key="index">
+                    <td>{{ index + 1 }}</td>
+                    <td>{{ formatDate(item.timestamp) }}</td>
+                    <td><span class="badge bg-primary">{{ item.id }}</span></td>
+                    <td>{{ item.ph }}</td>
+                    <td>{{ item.temperature }}</td>
+                    <td>{{ item.tds }}</td>
+                    <td>{{ item.do }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="mt-3 text-muted small" v-if="dataTable.length > 0">
+              Total data: {{ dataTable.length }} record
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Tabel Data Monitoring -->
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="card">
+          <div class="card-header align-items-center d-flex">
+            <h4 class="card-title mb-0 flex-grow-1">Data Monitoring</h4>
             <div class="flex-shrink-0">
               <button class="btn btn-sm btn-danger" @click="clearTable">
                 <i class="bx bx-trash"></i> Clear Data
@@ -141,17 +188,16 @@
                     <th scope="col">Suhu (°C)</th>
                     <th scope="col">TDS</th>
                     <th scope="col">DO</th>
-                    <th scope="col">Ketinggian Air</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-if="dataTable.length === 0">
+                  <tr v-if="dataTable2.length === 0">
                     <td colspan="8" class="text-center text-muted py-4">
                       <i class="bx bx-info-circle fs-3"></i>
                       <p class="mb-0">Belum ada data. Pilih perangkat untuk mulai monitoring.</p>
                     </td>
                   </tr>
-                  <tr v-for="(item, index) in dataTable" :key="index">
+                  <tr v-for="(item, index) in dataTable2" :key="index">
                     <td>{{ index + 1 }}</td>
                     <td>{{ formatDate(item.timestamp) }}</td>
                     <td><span class="badge bg-primary">{{ item.id }}</span></td>
@@ -159,7 +205,6 @@
                     <td>{{ item.temperature }}</td>
                     <td>{{ item.tds }}</td>
                     <td>{{ item.do }}</td>
-                    <td>{{ item.ketinggian_air }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -238,24 +283,19 @@ async function synchronize(id: string) {
   client.subscribe('udang/water/monitor/data');
   client.on('message', async (_topic: any, m: any) => {
     let message = JSON.parse(m.toString());
-    console.log(message, id);
 
     if(message.id == id) {
-      console.log(message);
-      
-      // Update nilai current
+
       ph.value = message.ph;
       temperatures.value = message.temperature;
       tds.value = message.tds;
       DO.value = message.do;
       
-      // Update chart data
       pH.value.push(Number(message.ph));
       temperature.value.push(Number(message.temperature));
       salinity.value.push(Number(message.tds));
       water_depth.value.push(Number(message.ketinggian_air));
 
-      // Tambahkan ke tabel dengan timestamp
       dataTable.value.unshift({
         id: message.id,
         ph: message.ph,
@@ -302,6 +342,7 @@ const getChoiced = async () => {
   water_depth.value = [];
   
   synchronize(id_perangkat.value);
+  loadDataMonitoring();
 };
 
 const colors = ref<string>('bg-primary');
@@ -406,4 +447,13 @@ const clearTable = () => {
   }
 };
 
+const dataTable2 = ref<any[]>([]);
+
+const loadDataMonitoring = async () => {
+  const response = await fetch('https://api2.gruvana.my.id/data/' + id_perangkat.value, {
+    method: 'GET'
+  });
+  const data = await response.json();
+  dataTable2.value = data.data;
+};
 </script>
