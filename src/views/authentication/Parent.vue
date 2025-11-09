@@ -45,7 +45,7 @@
                             </div>
                             <div class="carousel-item">
                               <p class="fs-15 fst-italic">
-                                " Bincang Budidaya Udang adalah aplikasi yang dapat
+                                " Gruvana adalah aplikasi yang dapat
                                 membantu petani udang dalam mengelola usahanya. "
                               </p>
                             </div>
@@ -70,7 +70,7 @@
           <div class="col-lg-12">
             <div class="text-center">
               <p class="mb-0">
-                © 2023 Bincang Budidaya Udang. Crafted with
+                © 2023 Gruvana. Crafted with
                 <i class="mdi mdi-heart text-danger"></i> by ProJs Universitas Madura
               </p>
             </div>

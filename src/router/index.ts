@@ -156,7 +156,7 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, _from) => {
-  document.title = to.meta.title as string + ' | Bincang Budidaya Udang';
+  document.title = to.meta.title as string + ' | Gruvana';
   const { setUser, getUser } = useSessionStore();
   const except = ['Login', 'Register', 'Not Found', 'Verifikasi Akun', 'Reset Password', 'Forgot Password'];
   if (!except.includes(to.name as string)&& (!sessionStorage.getItem('token') || sessionStorage.getItem('token')!.length <= 13)) {
