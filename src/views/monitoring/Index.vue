@@ -117,7 +117,7 @@
       </div>
     </div>
 
-    <!-- Tabel Data Monitoring -->
+    <!-- Tabel Data Monitoring Real-time -->
     <div class="row">
       <div class="col-xl-12">
         <div class="card">
@@ -164,7 +164,8 @@
         </div>
       </div>
     </div>
-    <!-- Tabel Data Monitoring -->
+
+    <!-- Tabel Data Monitoring dengan Pagination & Filter -->
     <div class="row">
       <div class="col-xl-12">
         <div class="card">
@@ -177,6 +178,23 @@
             </div>
           </div>
           <div class="card-body">
+            <!-- Filter Tanggal -->
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label">Tanggal Mulai</label>
+                <input type="date" class="form-control" v-model="filterStartDate" @change="applyFilter">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Tanggal Akhir</label>
+                <input type="date" class="form-control" v-model="filterEndDate" @change="applyFilter">
+              </div>
+              <div class="col-md-4 d-flex align-items-end">
+                <button class="btn btn-primary w-100" @click="resetFilter">
+                  <i class="bx bx-revision"></i> Reset Filter
+                </button>
+              </div>
+            </div>
+
             <div class="table-responsive">
               <table class="table table-striped table-hover align-middle mb-0">
                 <thead class="table-light">
@@ -191,14 +209,14 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-if="dataTable2.length === 0">
+                  <tr v-if="paginatedData.length === 0">
                     <td colspan="8" class="text-center text-muted py-4">
                       <i class="bx bx-info-circle fs-3"></i>
-                      <p class="mb-0">Belum ada data. Pilih perangkat untuk mulai monitoring.</p>
+                      <p class="mb-0">{{ filteredData2.length === 0 ? 'Belum ada data. Pilih perangkat untuk mulai monitoring.' : 'Tidak ada data yang sesuai dengan filter.' }}</p>
                     </td>
                   </tr>
-                  <tr v-for="(item, index) in dataTable2" :key="index">
-                    <td>{{ index + 1 }}</td>
+                  <tr v-for="(item, index) in paginatedData" :key="index">
+                    <td>{{ (currentPage - 1) * itemsPerPage + index + 1 }}</td>
                     <td>{{ formatDate(item.timestamp) }}</td>
                     <td><span class="badge bg-primary">{{ item.id }}</span></td>
                     <td>{{ item.ph }}</td>
@@ -209,8 +227,57 @@
                 </tbody>
               </table>
             </div>
-            <div class="mt-3 text-muted small" v-if="dataTable.length > 0">
-              Total data: {{ dataTable.length }} record
+
+            <!-- Pagination -->
+            <div class="row mt-3" v-if="filteredData2.length > 0">
+              <div class="col-sm-12 col-md-5">
+                <div class="text-muted">
+                  Menampilkan {{ (currentPage - 1) * itemsPerPage + 1 }} sampai 
+                  {{ Math.min(currentPage * itemsPerPage, filteredData2.length) }} dari 
+                  {{ filteredData2.length }} data
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-7">
+                <nav aria-label="Page navigation">
+                  <ul class="pagination justify-content-end mb-0">
+                    <li class="page-item" :class="{ disabled: currentPage === 1 }">
+                      <a class="page-link" href="javascript:void(0)" @click="changePage(currentPage - 1)">
+                        <i class="bx bx-chevron-left"></i>
+                      </a>
+                    </li>
+                    
+                    <li v-for="page in displayedPages" :key="page" 
+                        class="page-item" 
+                        :class="{ active: currentPage === page }">
+                      <a class="page-link" href="javascript:void(0)" @click="changePage(page)">
+                        {{ page }}
+                      </a>
+                    </li>
+
+                    <li class="page-item" :class="{ disabled: currentPage === totalPages }">
+                      <a class="page-link" href="javascript:void(0)" @click="changePage(currentPage + 1)">
+                        <i class="bx bx-chevron-right"></i>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+
+            <!-- Items per page selector -->
+            <div class="row mt-2" v-if="filteredData2.length > 0">
+              <div class="col-sm-12 col-md-6">
+                <div class="d-flex align-items-center">
+                  <label class="me-2 text-muted">Tampilkan:</label>
+                  <select class="form-select form-select-sm" style="width: auto;" v-model="itemsPerPage" @change="changeItemsPerPage">
+                    <option :value="10">10</option>
+                    <option :value="25">25</option>
+                    <option :value="50">50</option>
+                    <option :value="100">100</option>
+                  </select>
+                  <span class="ms-2 text-muted">data per halaman</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -226,7 +293,7 @@ declare const ApexCharts: any;
 
 <script setup lang="ts">
 import Modal from '../../components/Modal.vue';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, computed } from 'vue';
 import Parent from '../Parent.vue';
 // @ts-ignore
 import * as mqtt from 'mqtt/dist/mqtt.min';
@@ -253,6 +320,15 @@ const { value: pool } = useField<string>('pool_id');
 
 // Data untuk tabel
 const dataTable = ref<any[]>([]);
+const dataTable2 = ref<any[]>([]);
+
+// Pagination variables
+const currentPage = ref(1);
+const itemsPerPage = ref(10);
+
+// Filter variables
+const filterStartDate = ref('');
+const filterEndDate = ref('');
 
 onMounted(async () => {
   await loadPool();
@@ -441,13 +517,11 @@ const formatDate = (isoString: string) => {
 };
 
 // Fungsi untuk clear data tabel
-const clearTable = () => {
+const clearTable = async () => {
   if (confirm('Apakah Anda yakin ingin menghapus semua data dari tabel?')) {
     dataTable.value = [];
   }
 };
-
-const dataTable2 = ref<any[]>([]);
 
 const loadDataMonitoring = async () => {
   const response = await fetch('https://api2.gruvana.my.id/data/' + id_perangkat.value, {
@@ -455,5 +529,92 @@ const loadDataMonitoring = async () => {
   });
   const data = await response.json();
   dataTable2.value = data.data;
+  currentPage.value = 1; // Reset ke halaman pertama
+};
+
+// Filter data berdasarkan tanggal
+const filteredData2 = computed(() => {
+  if (!filterStartDate.value && !filterEndDate.value) {
+    return dataTable2.value;
+  }
+
+  return dataTable2.value.filter((item: any) => {
+    const itemDate = new Date(item.timestamp);
+    const startDate = filterStartDate.value ? new Date(filterStartDate.value) : null;
+    const endDate = filterEndDate.value ? new Date(filterEndDate.value) : null;
+
+    // Set waktu untuk perbandingan yang akurat
+    if (startDate) {
+      startDate.setHours(0, 0, 0, 0);
+    }
+    if (endDate) {
+      endDate.setHours(23, 59, 59, 999);
+    }
+
+    if (startDate && endDate) {
+      return itemDate >= startDate && itemDate <= endDate;
+    } else if (startDate) {
+      return itemDate >= startDate;
+    } else if (endDate) {
+      return itemDate <= endDate;
+    }
+
+    return true;
+  });
+});
+
+// Hitung total halaman
+const totalPages = computed(() => {
+  return Math.ceil(filteredData2.value.length / itemsPerPage.value);
+});
+
+// Data yang ditampilkan per halaman
+const paginatedData = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage.value;
+  const end = start + itemsPerPage.value;
+  return filteredData2.value.slice(start, end);
+});
+
+// Halaman yang ditampilkan di pagination
+const displayedPages = computed(() => {
+  const pages = [];
+  const maxPages = 5; // Maksimal tombol halaman yang ditampilkan
+  
+  let startPage = Math.max(1, currentPage.value - Math.floor(maxPages / 2));
+  let endPage = Math.min(totalPages.value, startPage + maxPages - 1);
+  
+  if (endPage - startPage < maxPages - 1) {
+    startPage = Math.max(1, endPage - maxPages + 1);
+  }
+  
+  for (let i = startPage; i <= endPage; i++) {
+    pages.push(i);
+  }
+  
+  return pages;
+});
+
+// Fungsi untuk ganti halaman
+const changePage = (page: number) => {
+  if (page >= 1 && page <= totalPages.value) {
+    currentPage.value = page;
+  }
+};
+
+// Fungsi untuk ganti jumlah item per halaman
+const changeItemsPerPage = () => {
+  currentPage.value = 1; // Reset ke halaman pertama
+};
+
+// Fungsi untuk apply filter
+const applyFilter = () => {
+  currentPage.value = 1; // Reset ke halaman pertama setelah filter
+};
+
+// Fungsi untuk reset filter
+const resetFilter = () => {
+  filterStartDate.value = '';
+  filterEndDate.value = '';
+  currentPage.value = 1;
 };
 </script>
