@@ -70,7 +70,7 @@
           <div class="col-lg-12">
             <div class="text-center">
               <p class="mb-0">
-                © 2023 Gruvana. Crafted with
+                © 2025 Gruvana. Crafted with
                 <i class="mdi mdi-heart text-danger"></i> by PM BEM 2025 Sumber dana DPPM-Kemdiktisainstek (UNIRA)
               </p>
             </div>

@@ -141,7 +141,7 @@ import usePagination from '../../composables/pagination2';
 import Parent from '../Parent.vue';
 import useApi from '../../composables/api';
 import Modal from '../../components/Modal.vue';
-const path = ref<string>('/report/' + '2023-08-01' + '/' + new Date().toISOString().split('T')[0]);
+const path = ref<string>('/report/' + '2025-08-01' + '/' + new Date().toISOString().split('T')[0]);
 const query = ref<string>('');
 const q = ref<string>('?pool_id=all');
 const {
