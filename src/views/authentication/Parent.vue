@@ -71,7 +71,7 @@
             <div class="text-center">
               <p class="mb-0">
                 © 2023 Gruvana. Crafted with
-                <i class="mdi mdi-heart text-danger"></i> by ProJs Universitas Madura
+                <i class="mdi mdi-heart text-danger"></i> by PM BEM 2025 Sumber dana DPPM-Kemdiktisainstek (UNIRA)
               </p>
             </div>
           </div>
