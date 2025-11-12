@@ -6,7 +6,7 @@
         </div>
         <div class="col-sm-6">
           <div class="text-sm-end d-none d-sm-block">
-            Tim Pengabdian Masyarakat Informatika Universitas Madura
+            PM BEM 2025 Sumber dana DPPM-Kemdiktisainstek (UNIRA)
           </div>
         </div>
       </div>
